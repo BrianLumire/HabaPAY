@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import Table from "@/components/table";
 import Image from "next/image";
 import { userData as rawData } from "@/data"; // Import the raw user data
