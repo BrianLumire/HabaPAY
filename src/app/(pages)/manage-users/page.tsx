@@ -1,5 +1,5 @@
 import UserList from "@/components/UserLists"
-import UserActivitys from "@/components/UserLists"
+import UserActivitys from "@/components/UserActivitys"
 import NewUsers from "@/components/NewUser"
 
 const ManageUsersPage = () => {

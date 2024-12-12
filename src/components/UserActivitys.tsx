@@ -1,8 +1,8 @@
 
-const userActivity = () => {
+const userActivitys = () => {
   return (
  <div className="">userActivity</div>
   )
 }
 
-export default userActivity
+export default userActivitys
