@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 interface ChartProps {
@@ -7,6 +7,29 @@ interface ChartProps {
 }
 
 const Charts = ({ data }: ChartProps) => {
+  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
+
+  useEffect(() => {
+    // Update the screen width on window resize
+    const handleResize = () => setScreenWidth(window.innerWidth);
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Dynamically adjust font size based on screen width
+  const getFontSize = () => {
+    if (screenWidth >= 1024) {
+      return "14px"; // Larger font for desktop screens
+    } else if (screenWidth >= 768) {
+      return "14px"; // Medium font for tablet screens
+    } else {
+      return "10px"; // Smaller font for mobile screens
+    }
+  };
+
   return (
     <div className="flex flex-col items-center">
       {/* Responsive Chart */}
@@ -21,9 +44,13 @@ const Charts = ({ data }: ChartProps) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" axisLine={{ strokeDasharray: "3 3", stroke: "#ccc" }} />
+          <XAxis
+            dataKey="name"
+            axisLine={{ strokeDasharray: "3 3", stroke: "#ccc" }}
+            style={{ fontSize: getFontSize() }} // Adjust font size dynamically based on screen width
+          />
           <YAxis
-            domain={[0, 'dataMax + 50000']} // Ensuring the Y-axis dynamically scales
+            domain={[0, "dataMax + 50000"]} // Ensuring the Y-axis dynamically scales
             ticks={[0, 100000, 200000, 300000, 400000, 500000]}
             axisLine={{ strokeDasharray: "3 3", stroke: "#ccc" }}
           />
@@ -31,8 +58,6 @@ const Charts = ({ data }: ChartProps) => {
           <Line type="monotone" dataKey="Transactions" stroke="#FDAC15" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
-
-     
     </div>
   );
 };

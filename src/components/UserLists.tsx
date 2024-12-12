@@ -18,12 +18,12 @@ type User = {
   balance: string;
   status: string;
   manage: ManageAction[];
+  activities: string[]; // Add activities to match the UserActivitys component
 };
 
 const userData: User[] = rawData as User[]; // Typecast rawData to User[]
 
-
-const UserList = () => {
+const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React.SetStateAction<User[]>> }) => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
   const handleRowSelect = (id: number) => {
@@ -51,10 +51,16 @@ const UserList = () => {
     { header: "Status", accessor: "status" },
     { header: "Manage", accessor: "manage" },
   ];
+
+  React.useEffect(() => {
+    const selectedUsers = userData.filter((user) => selectedRows.includes(user.id));
+    setSelectedUsers(selectedUsers);
+  }, [selectedRows, setSelectedUsers]);
+
   return (
     <div className="border border-gray-200 p-1 rounded-sm md:p-2">
-       {/* Title section */}
-       <div className="flex items-center flex-col md:flex-row gap-3 md:justify-between mb-3 md:mb-6">
+      {/* Title section */}
+      <div className="flex items-center flex-col md:flex-row gap-3 md:justify-between mb-3 md:mb-6">
         <h2 className="text-xl font-semibold font-ibmPlexSansd">Users</h2>
         <div className="flex items-center gap-3">
           <button className="px-4 py-1 flex items-center gap-2 border border-[#FDAC15] rounded-sm">
@@ -79,7 +85,7 @@ const UserList = () => {
         data={userData}
         renderRow={(item: User) => (
           <tr key={item.id} className="border-b  border-gray-200 hover:bg-slate-100">
-            <td className="py-2  ">
+            <td className="py-2">
               <label className="custom-checkbox">
                 <input
                   type="checkbox"
@@ -89,12 +95,12 @@ const UserList = () => {
                 <span className="checkbox"></span>
               </label>
             </td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal ">{item.name}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal ">{item.number}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal ">{item.email}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal ">{item.balance}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal ">{item.status}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal  flex gap-3 py-2">
+            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.name}</td>
+            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.number}</td>
+            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.email}</td>
+            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.balance}</td>
+            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.status}</td>
+            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal flex gap-3 py-2">
               {item.manage.map((action, index) => (
                 <button key={index}>
                   <Image src={action.src} alt={action.alt} width={20} height={20} />
@@ -107,9 +113,8 @@ const UserList = () => {
         onRowSelect={handleRowSelect}
         onSelectAll={handleSelectAll}
       />
-      
     </div>
-  )
-}
+  );
+};
 
-export default UserList
+export default UserList;

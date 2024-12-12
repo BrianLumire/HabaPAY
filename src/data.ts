@@ -235,3 +235,102 @@ export const userData = [
       manage2: "/dot3.svg",
     },
 ];
+
+export const userActivities = [
+  {
+    userId: 1,
+    activities: [
+      { action: "Created a HabaPay account", time: "Today.01:07PM" },
+      { action: "Withdrew Ksh 240", time: "Yesterday.11:30AM" },
+      { action: "Made a payment of Ksh 500", time: "2 days ago.03:45PM" },
+      { action: "Linked a new bank account", time: "2 days ago.09:00AM" },
+      { action: "Received Ksh 1000", time: "3 days ago.02:30PM" },
+    ],
+  },
+  {
+    userId: 2,
+    activities: [
+      { action: "Deposited Ksh 300", time: "Yesterday.10:15AM" },
+      { action: "Withdrew Ksh 150", time: "3 days ago.05:30PM" },
+      { action: "Made a payment of Ksh 250", time: "4 days ago.09:45AM" },
+      { action: "Linked a new phone number", time: "5 days ago.03:10PM" },
+    ],
+  },
+  {
+    userId: 3,
+    activities: [
+      { action: "Transferred Ksh 1000", time: "Today.09:30AM" },
+      { action: "Made a payment of Ksh 1500", time: "Yesterday.03:00PM" },
+      { action: "Deposited Ksh 700", time: "3 days ago.12:00PM" },
+      { action: "Withdrew Ksh 100", time: "4 days ago.06:15PM" },
+      { action: "Received Ksh 2000", time: "5 days ago.02:30PM" },
+    ],
+  },
+  {
+    userId: 4,
+    activities: [
+      { action: "Added Ksh 500", time: "Today.12:00PM" },
+      { action: "Withdrew Ksh 200", time: "Yesterday.02:15PM" },
+      { action: "Made a payment of Ksh 400", time: "2 days ago.08:45AM" },
+      { action: "Linked a new bank account", time: "3 days ago.04:20PM" },
+      { action: "Received Ksh 1200", time: "4 days ago.01:30PM" },
+    ],
+  },
+  {
+    userId: 5,
+    activities: [
+      { action: "Transferred Ksh 500", time: "Today.10:00AM" },
+      { action: "Deposited Ksh 150", time: "Yesterday.01:45PM" },
+      { action: "Made a payment of Ksh 600", time: "2 days ago.09:15AM" },
+      { action: "Linked a new phone number", time: "3 days ago.02:00PM" },
+    ],
+  },
+  {
+    userId: 6,
+    activities: [
+      { action: "Withdrew Ksh 200", time: "Today.11:30AM" },
+      { action: "Deposited Ksh 500", time: "Yesterday.04:15PM" },
+      { action: "Made a payment of Ksh 800", time: "2 days ago.10:00AM" },
+      { action: "Transferred Ksh 400", time: "3 days ago.06:30PM" },
+    ],
+  },
+  {
+    userId: 7,
+    activities: [
+      { action: "Transferred Ksh 100", time: "Today.01:00PM" },
+      { action: "Received Ksh 600", time: "Yesterday.05:00PM" },
+      { action: "Withdrew Ksh 300", time: "2 days ago.09:30AM" },
+      { action: "Deposited Ksh 250", time: "3 days ago.11:15AM" },
+    ],
+  },
+  {
+    userId: 8,
+    activities: [
+      { action: "Deposited Ksh 500", time: "Today.02:00PM" },
+      { action: "Withdrew Ksh 150", time: "Yesterday.03:30PM" },
+      { action: "Made a payment of Ksh 350", time: "2 days ago.08:00AM" },
+      { action: "Linked a new phone number", time: "3 days ago.12:00PM" },
+      { action: "Received Ksh 5000", time: "4 days ago.10:00AM" },
+    ],
+  },
+  {
+    userId: 9,
+    activities: [
+      { action: "Transferred Ksh 1000", time: "Today.03:00PM" },
+      { action: "Made a payment of Ksh 200", time: "Yesterday.04:45PM" },
+      { action: "Withdrew Ksh 500", time: "2 days ago.01:00PM" },
+      { action: "Deposited Ksh 700", time: "3 days ago.05:30PM" },
+    ],
+  },
+  {
+    userId: 10,
+    activities: [
+      { action: "Made a payment of Ksh 300", time: "Today.10:45AM" },
+      { action: "Withdrew Ksh 100", time: "Yesterday.12:00PM" },
+      { action: "Transferred Ksh 600", time: "2 days ago.09:30AM" },
+      { action: "Deposited Ksh 200", time: "3 days ago.11:00AM" },
+      { action: "Received Ksh 1500", time: "4 days ago.02:00PM" },
+    ],
+  },
+];
+
