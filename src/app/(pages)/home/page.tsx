@@ -1,6 +1,6 @@
 
 import RecentsActivities from "@/components/RecentsActivities"
-import Transactions from "@/components/Transactions"
+import Transaction from "@/components/Transaction"
 import NewUser from "@/components/NewUser"
 import TranStatsChart from "@/components/TranStatsCharts"
 
@@ -14,7 +14,7 @@ const HomePage = () => {
       </div>
        {/*left */}
        <div className="w-full md:w-1/3 flex flex-col gap-3">
-       <Transactions/>
+       <Transaction/>
        <NewUser/>
        </div>
      </div>

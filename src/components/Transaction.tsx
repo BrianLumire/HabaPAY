@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const Transactions = () => {
+const Transaction = () => {
   // Transaction data
   const transactionData = [
     {
@@ -118,4 +118,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default Transaction;

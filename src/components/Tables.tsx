@@ -10,7 +10,7 @@ type TableProps = {
   selectedIds?: any[]; // Selected row ids, if applicable
 };
 
-const Table = ({
+const Tables = ({
   columns,
   data,
   renderRow,
@@ -64,4 +64,4 @@ const Table = ({
   );
 };
 
-export default Table;
+export default Tables;
