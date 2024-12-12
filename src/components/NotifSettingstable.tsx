@@ -1,9 +1,9 @@
 import React from 'react'
 
-const notiSettingstable = () => {
+const NotifSettingstable = () => {
   return (
     <div className="">notiSettingstable</div>
   )
 }
 
-export default notiSettingstable
+export default NotifSettingstable

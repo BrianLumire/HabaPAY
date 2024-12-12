@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const RecentActivities = () => {
+const RecentsActivities = () => {
   // Data for recent activities
   const activities = [
     {
@@ -74,4 +74,4 @@ const RecentActivities = () => {
   );
 };
 
-export default RecentActivities;
+export default RecentsActivities;

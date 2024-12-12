@@ -1,6 +1,6 @@
-import UserList from "@/components/UserList"
-import UserActivity from "@/components/UserActivity"
-import NewUsers from "@/components/NewUsers"
+import UserList from "@/components/UserLists"
+import UserActivitys from "@/components/UserLists"
+import NewUsers from "@/components/NewUser"
 
 const ManageUsersPage = () => {
     return (
@@ -11,7 +11,7 @@ const ManageUsersPage = () => {
       </div>
       {/*bottom */}
       <div className="flex gap-3 flex-col md:flex-row ">
-        <div className="md:w-2/3"><UserActivity/></div>
+        <div className="md:w-2/3"><UserActivitys/></div>
         <div className="md:w-1/3"><NewUsers/></div>
       
       

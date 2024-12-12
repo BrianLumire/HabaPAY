@@ -1,8 +1,8 @@
 
-import RecentActivity from "@/components/RecentActivities"
+import RecentsActivities from "@/components/RecentsActivities"
 import Transactions from "@/components/Transactions"
-import NewUsers from "@/components/NewUsers"
-import TranStatsChart from "@/components/TranStatsChart"
+import NewUser from "@/components/NewUser"
+import TranStatsChart from "@/components/TranStatsCharts"
 
 const HomePage = () => {
     return (
@@ -10,12 +10,12 @@ const HomePage = () => {
       {/*left */}
       <div className="w-full md:w-2/3 flex flex-col gap-6">
       <TranStatsChart/>
-      <RecentActivity/>
+      <RecentsActivities/>
       </div>
        {/*left */}
        <div className="w-full md:w-1/3 flex flex-col gap-3">
        <Transactions/>
-       <NewUsers/>
+       <NewUser/>
        </div>
      </div>
     )

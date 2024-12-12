@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const newUsers = () => {
+const NewUser = () => {
   // Data for users
   const users = [
     { name: "Grace Mwai", email: "gracemwaii44@haba.co.ke" },
@@ -42,4 +42,4 @@ const newUsers = () => {
   );
 };
 
-export default newUsers;
+export default NewUser;

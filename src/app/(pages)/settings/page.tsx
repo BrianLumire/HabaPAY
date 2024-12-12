@@ -1,6 +1,6 @@
 "use client";
-import DevicesTable from "@/components/DevicesTable";
-import NotificationTable from "@/components/NotificationTable";
+import DevicesTables from "@/components/DevicesTables";
+import NotificationTables from "@/components/NotificationTables";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -90,7 +90,7 @@ const SettingsPage = () => {
             </button>
           </div>
         </div>
-        <NotificationTable notifications={notifications} setNotifications={setNotifications} />
+        <NotificationTables notifications={notifications} setNotifications={setNotifications} />
       </div>
 
       {/*bottom table*/}
@@ -99,7 +99,7 @@ const SettingsPage = () => {
           <p className="font-ibmPlexSans font-medium md:text-lg text-base">Manage Devices</p>
           <button className="md:text-sm text-xs font-ibmPlexSans border border-black py-[2px] px-[4px] rounded-sm">Logout of selected devices</button>
         </div>
-        <DevicesTable />
+        <DevicesTables />
       </div>
     </div>
   );

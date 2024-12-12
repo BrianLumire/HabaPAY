@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import AppChart from "@/components/AppChart"; // Assuming AppChart is imported here
-import RecentTable from "@/components/RecentTable";
+import RecentTable from "@/components/RecentTables";
 import Map from '@/components/Map';
 
 // Sample Data for the AppChart

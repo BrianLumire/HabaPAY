@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Chart from '@/components/Chart';
+import Chart from '@/components/Charts';
 
-const TranStatsChart = () => {
+const TranStatsCharts = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
@@ -99,4 +99,4 @@ const TranStatsChart = () => {
   );
 };
 
-export default TranStatsChart;
+export default TranStatsCharts;

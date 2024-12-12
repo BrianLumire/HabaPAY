@@ -6,7 +6,7 @@ interface ChartProps {
   data: any[];
 }
 
-const Chart = ({ data }: ChartProps) => {
+const Charts = ({ data }: ChartProps) => {
   return (
     <div className="flex flex-col items-center">
       {/* Responsive Chart */}
@@ -37,4 +37,4 @@ const Chart = ({ data }: ChartProps) => {
   );
 };
 
-export default Chart;
+export default Charts;

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import AppSidebar from "@/components/app-sidebar"
-import Navbar from "@/components/Navbar";
+import Navbars from "@/components/Navbars";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Main Content */}
       <div className="flex-1 mx-3">
         {/* Navbar */}
-        <Navbar
+        <Navbars
           toggleMobileSidebar={toggleMobileSidebar}
           toggleCollapse={toggleCollapse}
           isCollapsed={isCollapsed}

@@ -24,7 +24,7 @@ const columns = [
   { header: "Manage", accessor: "manage1" },
 ];
 
-const RecentTable = () => {
+const RecentTables = () => {
   const [sortConfig, setSortConfig] = useState<{
     key: keyof Recent; // Ensures key is a valid property of Recent
     direction: "asc" | "desc"; // Direction can only be "asc" or "desc"
@@ -121,4 +121,4 @@ const RecentTable = () => {
   );
 };
 
-export default RecentTable;
+export default RecentTables;

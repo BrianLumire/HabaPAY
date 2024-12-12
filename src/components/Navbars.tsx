@@ -9,7 +9,7 @@ interface NavbarProps {
   isCollapsed: boolean;
 }
 
-export default function Navbar({
+export default function Navbars({
   toggleMobileSidebar,
   toggleCollapse,
   isCollapsed,

@@ -10,7 +10,7 @@ type NotificationTableProps = {
   setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>;
 };
 
-const NotificationTable = ({ notifications, setNotifications }: NotificationTableProps) => {
+const NotificationTables = ({ notifications, setNotifications }: NotificationTableProps) => {
   // Handle checkbox change for individual notification
   const handleCheckboxChange = (index: number, type: 'browser' | 'email' | 'text') => {
     const updatedNotifications = [...notifications];
@@ -62,4 +62,4 @@ const NotificationTable = ({ notifications, setNotifications }: NotificationTabl
   );
 };
 
-export default NotificationTable;
+export default NotificationTables;
