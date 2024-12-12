@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Chart from '@/components/chart';
+import Chart from '@/components/Chart';
 
 const TranStatsChart = () => {
   const [showDropdown, setShowDropdown] = useState(false);

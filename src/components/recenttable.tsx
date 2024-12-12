@@ -1,5 +1,5 @@
 "use client";
-import TableRecent from "@/components/TableRecent";
+
 import { recent } from "@/data";
 import Image from "next/image";
 import { useState } from "react";
