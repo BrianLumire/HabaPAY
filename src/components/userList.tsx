@@ -23,7 +23,7 @@ type User = {
 const userData: User[] = rawData as User[]; // Typecast rawData to User[]
 
 
-const userList = () => {
+const UserList = () => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
   const handleRowSelect = (id: number) => {
@@ -112,4 +112,4 @@ const userList = () => {
   )
 }
 
-export default userList
+export default UserList
