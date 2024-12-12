@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import AppChart from "@/components/AppChart"; // Assuming AppChart is imported here
-import Recenttable from "@/components/Recenttable";
+import RecentTable from "@/components/RecentTable";
 import Map from '@/components/Map';
 
 // Sample Data for the AppChart
@@ -164,7 +164,7 @@ const Analyticspage = () => {
           </button>
         </div>
        
-        <Recenttable />
+        <RecentTable />
       </div>
     </div>
   );
