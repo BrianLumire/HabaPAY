@@ -1,7 +1,7 @@
-import TranStatsChart from "@/components/tran-statschart"
-import RecentActivity from "@/components/recentActivities"
-import Transactions from "@/components/transactions"
-import NewUsers from "@/components/newUsers"
+import TranStatsChart from "@/components/Tran-statschart"
+import RecentActivity from "@/components/RecentActivities"
+import Transactions from "@/components/Transactions"
+import NewUsers from "@/components/NewUsers"
 
 const HomePage = () => {
     return (
