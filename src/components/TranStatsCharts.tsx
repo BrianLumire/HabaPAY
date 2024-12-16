@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Chart from '@/components/Charts';
+import Charts from '@/components/Charts';
 
 const TranStatsCharts = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -78,7 +78,7 @@ const TranStatsCharts = () => {
       )}
 
       {/* Chart Component with filtered data */}
-      <Chart data={filteredData} />
+      <Charts data={filteredData} />
 
       {/* Legend Section - Positioned Below the Chart */}
       <div className="flex flex-col">
