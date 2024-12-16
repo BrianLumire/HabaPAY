@@ -7,9 +7,13 @@ interface ChartProps {
 }
 
 const Charts = ({ data }: ChartProps) => {
-  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
+  // Start with a default value to avoid SSR issues
+  const [screenWidth, setScreenWidth] = useState<number>(0);
 
   useEffect(() => {
+    // Set the initial width on mount
+    setScreenWidth(window.innerWidth);
+
     // Update the screen width on window resize
     const handleResize = () => setScreenWidth(window.innerWidth);
 
@@ -18,6 +22,7 @@ const Charts = ({ data }: ChartProps) => {
     // Cleanup on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
 
   // Dynamically adjust font size based on screen width
   const getFontSize = () => {
