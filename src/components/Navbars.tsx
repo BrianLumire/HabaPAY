@@ -1,7 +1,10 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
+import { ModeToggle } from "@/components/mode-toggle";
+import { useTheme } from "next-themes"; // Import useTheme
 
 interface NavbarProps {
   toggleMobileSidebar: () => void;
@@ -16,6 +19,8 @@ export default function Navbars({
 }: NavbarProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const { theme } = useTheme(); // Access the current theme
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -48,7 +53,11 @@ export default function Navbars({
   };
 
   return (
-    <div className="md:mt-7 mt-3 md:mb-3 flex items-center sticky top-0 z-20 bg-white  pb-3 shadow-md">
+    <div
+      className={`md:pt-7 pt-3 md:mb-3 flex items-center sticky top-0 z-20 pb-3 shadow-md ${
+        theme === "dark" ? "bg-gray-800" : "bg-white" // Dynamically set the background color based on the theme
+      }`}
+    >
       {/* Mobile Menu Button */}
       <button
         onClick={toggleMobileSidebar}
@@ -82,7 +91,7 @@ export default function Navbars({
             className="hidden md:flex items-center gap-2 text-sm rounded-full ring-[1px] ring-[#FDAC15] px-2"
             onClick={handleSearchClick}
           >
-            <Image src="/search.svg" alt="search" width={17} height={17} />
+            <Image src="/magnifying-glass.png" alt="search" width={17} height={17} />
             <input
               type="text"
               placeholder="Search..."
@@ -98,14 +107,8 @@ export default function Navbars({
         </div>
 
         <div className="flex items-center gap-3 md:pr-5">
-          <div className="w-[20px] h-[20px] md:w-[26px] md:h-[26px]">
-            <Image
-              src="/toggle.svg"
-              alt="toggle"
-              width={26}
-              height={26}
-              className="w-full h-full"
-            />
+          <div className="">
+            <ModeToggle />
           </div>
           <div className="w-[30px] h-[30px] md:w-[37px] md:h-[37px]">
             <Image
@@ -131,7 +134,7 @@ export default function Navbars({
       {/* Overlay and Dialog */}
       {isDialogOpen && (
         <div
-          className="fixed inset-0 -z-50 bg-black bg-opacity-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
           onClick={handleCloseDialog}
         >
           <div
@@ -151,7 +154,7 @@ export default function Navbars({
                   <li
                     key={page.path}
                     onClick={() => handlePageSelect(page.path)}
-                    className="cursor-pointer py-2 px-3 hover:bg-[#f5efe5] hover:text-[#FDAC15] rounded"
+                    className="cursor-pointer py-2 px-3 text-black hover:bg-[#f5efe5] hover:text-[#FDAC15] rounded"
                   >
                     {page.name}
                   </li>

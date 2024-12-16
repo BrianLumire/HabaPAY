@@ -22,14 +22,14 @@ export function ModeToggle() {
           {/* Conditionally render images based on the theme */}
           {theme === "dark" ? (
             <Image
-              src="/waning-moon.png" // Custom image for dark mode
+              src="/dark.png" // Custom image for dark mode
               alt="Dark Mode"
               width={24}
               height={24}
             />
           ) : (
             <Image
-              src="/sun.png" // Custom image for light mode
+              src="/toggle.svg" // Custom image for light mode
               alt="Light Mode"
               width={24}
               height={24}

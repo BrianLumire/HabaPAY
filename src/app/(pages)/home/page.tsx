@@ -6,7 +6,7 @@ import TranStatsChart from "@/components/TranStatsCharts"
 
 const HomePage = () => {
     return (
-     <div className="flex pb-5 flex-col md:flex-row gap-3">
+     <div className="flex pb-5 mt-4 flex-col md:flex-row gap-3">
       {/*left */}
       <div className="w-full md:w-2/3 flex flex-col gap-6">
       <TranStatsChart/>

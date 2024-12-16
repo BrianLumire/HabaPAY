@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
        <head>
-        <link href={ibmPlexSans} rel="stylesheet" /> {/* Add IBM Plex Sans font */}
+        <link href={ibmPlexSans} rel="stylesheet" /> 
       </head>
       <body className={inter.className}>
       <ThemeProvider

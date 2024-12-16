@@ -62,35 +62,35 @@ const Analyticspage = () => {
   };
 
   return (
-    <div className="pb-8">
+    <div className="pb-8 mt-4">
 
       {/* Top Section */}
-      <div className="flex flex-col  md:flex-row gap-3 mb-3">
-        <div className="w-full md:w-2/3 border border-gray-200 rounded-sm">
+      <div className="flex  flex-col  md:flex-row gap-3 mb-3">
+        <div className=" w-full  md:w-2/3 border border-gray-200 rounded-sm">
           {/* Card Section */}
           <div className="flex flex-col md:flex-row gap-3 md:justify-between">
             <div className="bg-[#FFF7E8] md:w-1/3 border border-[#faecd0] p-2 flex flex-col gap-4">
-              <p className='font-ibmPlexSans text-base'>Weekly Usage</p>
-              <span className='font-ibmPlexSans text-sm'>16,742 Transactions</span>
+              <p className='font-ibmPlexSans text-base text-black'>Weekly Usage</p>
+              <span className='font-ibmPlexSans text-sm text-black'>16,742 Transactions</span>
               <div className=" bg-white px-[3px] py-[2px] flex items-center gap-2 w-20">
                 <Image src="/downward.svg" alt="" width={12} height={12} />
                 <span className='text-xs font-ibmPlexSans text-[#FDAC15]'>3 %</span>
               </div>
             </div>
             <div className="bg-[#FFF7E8] md:w-1/3 border border-[#faecd0] p-2 flex flex-col gap-4">
-              <p className='font-ibmPlexSans text-base'>Weekly Sign-Ups</p>
-              <span className='font-ibmPlexSans text-sm'>225 Users</span>
+              <p className='font-ibmPlexSans text-base text-black'>Weekly Sign-Ups</p>
+              <span className='font-ibmPlexSans text-sm text-black'>225 Users</span>
               <div className=" bg-white px-[3px] py-[2px] flex items-center gap-2 w-20">
                 <Image src="/downward.svg" alt="" width={12} height={12} />
                 <span className='text-xs font-ibmPlexSans text-[#FDAC15]'>5 %</span>
               </div>
             </div>
-            <div className="bg-[#FFF7E8] md:w-1/3 border border-[#faecd0] p-2 flex flex-col gap-4">
-              <p className='font-ibmPlexSans text-base'>Weekly Exchange</p>
-              <span className='font-ibmPlexSans text-sm'>Ksh 204,558</span>
+            <div className="bg-[#FFF7E8] w-full  md:w-1/3 border border-[#faecd0] p-2 flex flex-col gap-4">
+              <p className='font-ibmPlexSans text-base text-black'>Weekly Exchange</p>
+              <span className='font-ibmPlexSans text-sm text-black'>Ksh 204,558</span>
               <div className=" bg-white px-[3px] py-[2px] flex items-center gap-2 w-20">
                 <Image src="/trend.png" alt="" width={12} height={12} />
-                <span className='text-xs font-ibmPlexSans'>5 %</span>
+                <span className='text-xs font-ibmPlexSans text-black'>5 %</span>
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@ const Analyticspage = () => {
                   <li>
                     <button
                       onClick={() => handleMetricSelect('All')}
-                      className="w-full text-left text-sm p-2 hover:bg-[#f5e4c6] hover:text-[#FDAC15]"
+                      className="w-full text-black text-left text-sm p-2 hover:bg-[#f5e4c6] hover:text-[#FDAC15]"
                     >
                       All
                     </button>
@@ -123,7 +123,7 @@ const Analyticspage = () => {
                   <li>
                     <button
                       onClick={() => handleMetricSelect('NewUsers')}
-                      className="w-full text-left text-sm p-2 hover:bg-[#f5e4c6] hover:text-[#FDAC15]"
+                      className="w-full text-black text-left text-sm p-2 hover:bg-[#f5e4c6] hover:text-[#FDAC15]"
                     >
                       New Users
                     </button>
@@ -131,7 +131,7 @@ const Analyticspage = () => {
                   <li>
                     <button
                       onClick={() => handleMetricSelect('NationalReach')}
-                      className="w-full text-left text-sm p-2 hover:bg-[#f5e4c6] hover:text-[#FDAC15]"
+                      className="w-full text-black text-left text-sm p-2 hover:bg-[#f5e4c6] hover:text-[#FDAC15]"
                     >
                       National Reach
                     </button>
@@ -141,7 +141,7 @@ const Analyticspage = () => {
             )}
 
             {/* Chart Display */}
-            <div className="w-full mt-3 h-[450px]">
+            <div className="w-full text-black mt-3 h-[450px]">
               <AppChart selectedMetric={selectedMetric} data={data} />
             </div>
           </div>
@@ -150,7 +150,7 @@ const Analyticspage = () => {
         {/* Customers by Region Map Section */}
         <div className="w-full p-2 md:w-1/3 border border-gray-200 rounded-sm">
           <h2 className='font-ibmPlexSans text-lg font-semibold '>Customers by Region</h2>
-          <Map />
+          
         </div>
       </div>
 

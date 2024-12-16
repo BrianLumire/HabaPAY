@@ -38,7 +38,7 @@ const Tables = ({
   return (
     <div className="overflow-x-auto ">
       <table className=" w-full  min-w-[800px] md:table mb-4">
-        <thead className="font-ibmPlexSans text-left  text-[#1E1E1E]">
+        <thead className="font-ibmPlexSans text-left">
           <tr>
             {columns.map((col) => (
               <th key={col.accessor} className=" border-b pb-2 border-gray-200">

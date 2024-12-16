@@ -35,7 +35,7 @@ const SettingsPage = () => {
   }, 0);
 
   return (
-    <div className="border mb-6 border-black rounded-sm p-2 pb-5">
+    <div className="border mb-6 border-black mt-4  rounded-sm p-2 pb-5">
       {/*top */}
       <div className="flex flex-col mb-3">
         <div className="flex gap-3 items-center">

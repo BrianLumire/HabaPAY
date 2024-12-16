@@ -17,10 +17,10 @@ type Recent = {
 
 const columns = [
   { header: "Name", accessor: "name" },
-  { header: "Balance", accessor: "balance", icon: "/sort.svg" },
-  { header: "Transactions", accessor: "transactions", icon: "/sort.svg" },
-  { header: "App Launches", accessor: "applaunches", icon: "/sort.svg" },
-  { header: "Status", accessor: "status", icon: "/sort.svg" },
+  { header: "Balance", accessor: "balance", icon: "/triangle-button.png" },
+  { header: "Transactions", accessor: "transactions", icon: "/triangle-button.png" },
+  { header: "App Launches", accessor: "applaunches", icon: "/triangle-button.png" },
+  { header: "Status", accessor: "status", icon: "/triangle-button.png" },
   { header: "Manage", accessor: "manage1" },
 ];
 
@@ -60,23 +60,23 @@ const RecentTables = () => {
 
   const renderRow = (item: Recent) => {
     return (
-      <tr key={item.id} className="border-b ml-3 border-gray-300 py-4 hover:bg-slate-100">
-        <td scope="row" className="font-ibmPlexSans py-[2px]  text-sm sm:text-base">
+      <tr key={item.id} className="border-b border-gray-300 py-4 hover:bg-slate-100">
+        <td scope="row" className="font-ibmPlexSans py-[2px] pl-2  text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">
           {item.name}
         </td>
-        <td className="font-ibmPlexSans text-sm sm:text-base">
+        <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">
           {item.balance}
         </td>
-        <td className="font-ibmPlexSans text-sm sm:text-base">
+        <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">
           {item.transactions}
         </td>
-        <td className="font-ibmPlexSans text-sm sm:text-base">
+        <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">
           {item.applaunches}
         </td>
-        <td className="font-ibmPlexSans text-sm sm:text-base">
+        <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">
           {item.status}
         </td>
-        <td className="flex items-center gap-5">
+        <td className="flex items-center whitespace-nowrap sm:whitespace-normal gap-5">
           <Image
             src={item.manage1 || "/default-icon.svg"}
             alt={`${item.name}'s action 1`}
@@ -96,7 +96,8 @@ const RecentTables = () => {
 
   return (
     <>
-      <table className="w-full">
+    <div className="overflow-x-auto ">
+    <table className=" w-full  min-w-[800px] md:table mb-4">
         <thead>
           <tr>
             {columns.map((col) => (
@@ -105,7 +106,7 @@ const RecentTables = () => {
                 className="py-4 text-sm sm:text-base cursor-pointer"
                 onClick={() => requestSort(col.accessor as keyof Recent)} // Cast the accessor to keyof Recent
               >
-                <div className="flex items-center space-x-2">
+                <div className="flex  items-center ">
                   <span>{col.header}</span>
                   {col.icon && <img src={col.icon} alt={`${col.header} icon`} className="w-4 h-4" />}
                 </div>
@@ -117,6 +118,8 @@ const RecentTables = () => {
           {sortedData.map(renderRow)}
         </tbody>
       </table>
+    </div>
+   
     </>
   );
 };

@@ -1,30 +1,32 @@
 "use client";
-import React, { useState } from "react";
-import Table from "@/components/Tables";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { userData as rawData } from "@/data"; // Import the raw user data
+import { userData as rawData } from "@/data"; // Import raw data
+import { User } from "@/app/(pages)/manage-users/page"; // Correct import path
+import Table from "@/components/Tables";
 
-type ManageAction = {
-  src: string;
-  alt: string;
-};
-
-type User = {
-  id: number;
-  isChecked: boolean;
-  name: string;
-  number: string;
-  email: string;
-  balance: string;
-  status: string;
-  manage: ManageAction[];
-  activities: string[]; // Add activities to match the UserActivitys component
-};
-
+// Define the user data and actions
 const userData: User[] = rawData as User[]; // Typecast rawData to User[]
 
 const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React.SetStateAction<User[]>> }) => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
+
+  // Load selected rows from localStorage on component mount
+  useEffect(() => {
+    const storedSelectedRows = JSON.parse(localStorage.getItem("selectedRows") || "[]");
+    if (storedSelectedRows.length > 0) {
+      setSelectedRows(storedSelectedRows);  // Set state with the stored selection
+    }
+  }, []);
+
+  useEffect(() => {
+    // Whenever selectedRows change, save them to localStorage
+    localStorage.setItem("selectedRows", JSON.stringify(selectedRows));
+
+    // Update the selected users based on selected rows
+    const selectedUsers = userData.filter((user) => selectedRows.includes(user.id));
+    setSelectedUsers(selectedUsers);
+  }, [selectedRows, setSelectedUsers]);
 
   const handleRowSelect = (id: number) => {
     setSelectedRows((prevSelectedRows) =>
@@ -52,14 +54,8 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
     { header: "Manage", accessor: "manage" },
   ];
 
-  React.useEffect(() => {
-    const selectedUsers = userData.filter((user) => selectedRows.includes(user.id));
-    setSelectedUsers(selectedUsers);
-  }, [selectedRows, setSelectedUsers]);
-
   return (
     <div className="border border-gray-200 p-1 rounded-sm md:p-2">
-      {/* Title section */}
       <div className="flex items-center flex-col md:flex-row gap-3 md:justify-between mb-3 md:mb-6">
         <h2 className="text-xl font-semibold font-ibmPlexSansd">Users</h2>
         <div className="flex items-center gap-3">
@@ -71,12 +67,6 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
             <span className="text-[#FDAC15] text-sm">Filter</span>
             <Image src="/filter.svg" alt="" width={15} height={15} />
           </button>
-        </div>
-        {/* Pagination */}
-        <div className="flex gap-3">
-          <Image src="/leftarrrow.svg" alt="" width={12} height={12} />
-          <span className="text-[#898989] text-base">20-30 of 100</span>
-          <Image src="/rightarrow.svg" alt="" width={12} height={12} />
         </div>
       </div>
 
@@ -95,12 +85,12 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
                 <span className="checkbox"></span>
               </label>
             </td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.name}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.number}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.email}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.balance}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal">{item.status}</td>
-            <td className="font-ibmPlexSans whitespace-nowrap sm:whitespace-normal flex gap-3 py-2">
+            <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">{item.name}</td>
+            <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">{item.number}</td>
+            <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">{item.email}</td>
+            <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">{item.balance}</td>
+            <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">{item.status}</td>
+            <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal flex gap-3 py-2">
               {item.manage.map((action, index) => (
                 <button key={index}>
                   <Image src={action.src} alt={action.alt} width={20} height={20} />

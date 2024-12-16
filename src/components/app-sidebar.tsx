@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import Link from "next/link";
+import { useTheme } from "next-themes"; // Import the useTheme hook
 import Image from "next/image";
-import { usePathname } from "next/navigation"; // Import usePathname
+import { usePathname } from "next/navigation";
 
 interface SidebarProps {
   isMobileSidebarOpen: boolean;
@@ -17,9 +18,10 @@ export default function Sidebar({
   toggleMobileSidebar,
   isCollapsed,
 }: SidebarProps) {
-  const [showBalance, setShowBalance] = useState(true); // State to toggle balance visibility
+  const [showBalance, setShowBalance] = useState(false); // Initially set to false to hide balance
   const [showLogoutModal, setShowLogoutModal] = useState(false); // State to toggle logout modal
   const pathname = usePathname(); // Get current path using usePathname
+  const { theme } = useTheme(); // Get the current theme (light or dark)
 
   // Function to toggle balance visibility
   const toggleBalanceVisibility = () => {
@@ -76,9 +78,13 @@ export default function Sidebar({
 
   // Handle Confirm Log out
   const handleConfirmLogout = () => {
-    // Add your logout logic here (clear session, redirect, etc.)
+    // Add your logout logic here
     console.log("Logged out");
-    setShowLogoutModal(false);
+    // Clear session data or tokens
+    localStorage.clear();
+    sessionStorage.clear();
+    // Redirect to login page
+    window.location.href = "/login"; // Adjust path as necessary
   };
 
   // Handle Cancel Log out
@@ -86,34 +92,52 @@ export default function Sidebar({
     setShowLogoutModal(false);
   };
 
+  // Close modal on `Esc` key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && showLogoutModal) {
+        setShowLogoutModal(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showLogoutModal]);
+
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-screen">
       {/* Sidebar */}
       <div
-        className={`bg-white transition-all duration-300 ${
+        className={`transition-all duration-300 ${
           isCollapsed ? "w-16" : "w-64"
         } fixed md:relative h-full md:block z-40 border border-gray-200 pb-6 ${
           isMobileSidebarOpen ? "block" : "hidden"
-        }`}
+        } ${
+          theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
+        }`} // Apply dark or light background based on theme
       >
         {/* Sidebar Header */}
-        <div className=" ">
-          <div className="flex justify-end p-2">
-            <button onClick={toggleMobileSidebar} className="text-black md:hidden focus:outline-none">
-              <X size={24} />
-            </button>
-          </div>
-
-          <div className="flex items-center justify-center py-3 md:py-4">
-            <span
-              className={`${isCollapsed ? "hidden" : "block"} font-bold   text-2xl text-[#FDAC15]`}
-            >
-              HabaPay
-            </span>
-          </div>
+        <div className="flex justify-end p-2">
+          <button
+            onClick={toggleMobileSidebar}
+            className="text-black md:hidden focus:outline-none"
+          >
+            <X size={24} />
+          </button>
         </div>
 
-        {/* Image and User Info */}
+        <div className="flex items-center justify-center py-3 md:py-4">
+          <span
+            className={`${isCollapsed ? "hidden" : "block"} font-bold text-2xl text-[#FDAC15]`}
+          >
+            HabaPay
+          </span>
+        </div>
+
+        {/* User Info */}
         {!isCollapsed && (
           <div className="mb-7 flex flex-col gap-2 items-center justify-center">
             <Image src="/User DP.svg" alt="User Image" width={90} height={90} />
@@ -129,9 +153,9 @@ export default function Sidebar({
               <p className="font-ibmPlexSans text-base">Current Balance</p>
               <button onClick={toggleBalanceVisibility} className="focus:outline-none">
                 {showBalance ? (
-                  <Image src="/see.png" alt="Manage Users" width={20} height={20} />
+                  <Image src="/see.png" alt="Show Balance" width={20} height={20} />
                 ) : (
-                  <Image src="/invisible.png" alt="Manage Users" width={20} height={20} />
+                  <Image src="/invisible.png" alt="Hide Balance" width={20} height={20} />
                 )}
               </button>
             </div>
@@ -145,11 +169,10 @@ export default function Sidebar({
 
         {/* Sidebar Content */}
         <nav className="flex flex-col gap-16 md:gap-24">
-          {/* Lower pages */}
           <div className="flex flex-col space-y-2 p-4">
             <Link href="/home" onClick={handleLinkClick}>
               <div
-                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] ${
+                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] hover:text-[#FDAC15] ${
                   pathname === "/home" ? "text-[#FDAC15] bg-[#FFFBF4]" : ""
                 }`}
               >
@@ -159,7 +182,7 @@ export default function Sidebar({
             </Link>
             <Link href="/analytics" onClick={handleLinkClick}>
               <div
-                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] ${
+                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] hover:text-[#FDAC15] ${
                   pathname === "/analytics" ? "text-[#FDAC15] bg-[#FFFBF4]" : ""
                 }`}
               >
@@ -169,21 +192,22 @@ export default function Sidebar({
             </Link>
             <Link href="/manage-users" onClick={handleLinkClick}>
               <div
-                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] ${
+                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] hover:text-[#FDAC15] ${
                   pathname === "/manage-users" ? "text-[#FDAC15] bg-[#FFFBF4]" : ""
                 }`}
               >
                 <Image src={getIconForPage("/manage-users")} alt="Manage Users" width={25} height={25} />
-                {!isCollapsed && <span className="text-base font-ibmPlexSans font-medium">Manage Users</span>}
+                {!isCollapsed && (
+                  <span className="text-base font-ibmPlexSans font-medium">Manage Users</span>
+                )}
               </div>
             </Link>
           </div>
 
-          {/* Lower pages */}
           <div className="flex flex-col space-y-2 p-4">
             <Link href="/settings" onClick={handleLinkClick}>
               <div
-                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] ${
+                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] hover:text-[#FDAC15] ${
                   pathname === "/settings" ? "text-[#FDAC15] bg-[#FFFBF4]" : ""
                 }`}
               >
@@ -193,7 +217,7 @@ export default function Sidebar({
             </Link>
             <button onClick={handleLogoutClick}>
               <div
-                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] ${
+                className={`flex items-center space-x-2 p-2 rounded hover:bg-[#FFFBF4] hover:text-[#FDAC15] ${
                   pathname === "/" ? "text-[#FDAC15] bg-[#FFFBF4]" : ""
                 }`}
               >
@@ -215,9 +239,17 @@ export default function Sidebar({
 
       {/* Logout Modal */}
       {showLogoutModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-          <div className="bg-white p-5 rounded-md shadow-lg w-[80%] md:w-1/4 lg:1/5">
-            <h2 className="text-lg text-center font-ibmPlexSans font-semibold">Are you sure you want to log out?</h2>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center"
+          onClick={handleCancelLogout}
+        >
+          <div
+            className="bg-white p-5 rounded-md shadow-lg w-[80%] md:w-1/4 lg:1/5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-lg text-center font-ibmPlexSans font-semibold text-black">
+              Are you sure you want to log out?
+            </h2>
             <div className="mt-9 flex gap-5 items-center justify-center">
               <button
                 onClick={handleCancelLogout}
@@ -227,7 +259,7 @@ export default function Sidebar({
               </button>
               <button
                 onClick={handleConfirmLogout}
-                className="px-4 font-ibmPlexSans  text-base py-2 bg-[#FDAC15] text-white rounded"
+                className="px-4 font-ibmPlexSans text-base py-2 bg-[#FDAC15] text-white rounded"
               >
                 Proceed
               </button>

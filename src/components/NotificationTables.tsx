@@ -21,12 +21,12 @@ const NotificationTables = ({ notifications, setNotifications }: NotificationTab
   return (
     <div className="overflow-x-auto">
       <table className="w-full table-auto border-collapse border border-gray-300">
-        <thead >
+        <thead className="bg-[#FFF7E8] text-black" >
           <tr>
-            <th className="py-2 px-4 text-left font-semibold">Type</th>
-            <th className="py-2 px-4 text-center font-semibold">Browser</th>
-            <th className="py-2 px-4 text-center font-semibold">Email</th>
-            <th className="py-2 px-4 text-center font-semibold">Text</th>
+            <th className="py-2 px-4 text-left text-sm sm:text-base font-semibold">Type</th>
+            <th className="py-2 px-4 text-center text-sm sm:text-base font-semibold">Browser</th>
+            <th className="py-2 px-4 text-center text-sm sm:text-base font-semibold">Email</th>
+            <th className="py-2 px-4 text-center text-sm sm:text-base font-semibold">Text</th>
           </tr>
         </thead>
         <tbody>

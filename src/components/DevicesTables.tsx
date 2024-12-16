@@ -50,7 +50,7 @@ const DevicesTable = () => {
   return (
     <div className="overflow-x-auto">
       <table className="w-full table-auto border-collapse border border-gray-300">
-        <thead className="bg-[#FFF7E8]">
+        <thead className="bg-[#FFF7E8] text-black">
           <tr>
             <th className="py-2 px-4 text-left font-semibold w-[5%]">
               {/* "Select All" checkbox */}
@@ -70,7 +70,7 @@ const DevicesTable = () => {
           {devices.map((device, index) => (
             <tr
               key={index}
-              className={`hover:bg-gray-100 border-t border-gray-100 ${selectedDevices[index] ? "bg-red-200" : ""}`}
+              className={`hover:bg-gray-100 border-t border-gray-100 ${selectedDevices[index] ? "bg-[#FFF7E8]" : ""}`}
             >
               <td className="py-2 px-4">
                 {/* Individual device checkbox */}
@@ -80,10 +80,10 @@ const DevicesTable = () => {
                   onChange={() => handleCheckboxChange(index)}
                 />
               </td>
-              <td className="py-2 px-4">{device.browser}</td>
-              <td className="py-2 px-4">{device.device}</td>
-              <td className="py-2 px-4">{device.location}</td>
-              <td className="py-2 px-4">{device.lastSeen}</td>
+              <td className="py-2 text-sm sm:text-base px-4">{device.browser}</td>
+              <td className="py-2 text-sm sm:text-base px-4">{device.device}</td>
+              <td className="py-2 text-sm sm:text-base px-4">{device.location}</td>
+              <td className="py-2 text-sm sm:text-base px-4">{device.lastSeen}</td>
             </tr>
           ))}
         </tbody>

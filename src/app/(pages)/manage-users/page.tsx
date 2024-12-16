@@ -27,14 +27,14 @@ const ManageUsersPage = () => {
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]); // Use User[] type for selected users
 
   return (
-    <div className="pb-5">
+    <div className="pb-5 mt-4">
       {/* Top section */}
       <div className="mb-4">
         <UserLists setSelectedUsers={setSelectedUsers} />
       </div>
 
       {/* Bottom section */}
-      <div className="flex gap-3 flex-col md:flex-row">
+      <div className="flex gap-3 w-full flex-col md:flex-row">
         <div className="md:w-2/3">
           <UserActivitys selectedUsers={selectedUsers} />
         </div>

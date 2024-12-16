@@ -23,17 +23,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       />
 
       {/* Main Content */}
-      <div className="flex-1 mx-3">
+      <div className="w-full mx-3">
         {/* Navbar */}
         <Navbars
           toggleMobileSidebar={toggleMobileSidebar}
           toggleCollapse={toggleCollapse}
           isCollapsed={isCollapsed}
-        />
-
-        {/* Page Content */}
-        <div className="md:mx-6 md:mt-5 m-3">{children}</div>
+        />{/* Page Content */}{children}
       </div>
+
     </div>
   );
 }
