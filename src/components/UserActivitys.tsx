@@ -49,7 +49,7 @@ const UserActivitys = ({ selectedUsers }: { selectedUsers: User[] }) => {
         <p className="font-ibmPlexSans font-semibold text-lg mb-5">User Activity</p>
         <div className="flex flex-col justify-center items-center gap-4">
           <Image src="/pic.svg" alt="" width={200} height={200} />
-          <h3 className="font-ibmPlexSans font-semibold text-[#898989]">You haven't selected any user</h3>
+          <h3 className="font-ibmPlexSans font-semibold text-[#898989]">You havent selected any user</h3>
           <div className="flex flex-col">
             <p className="font-ibmPlexSans text-sm text-[#898989]">
               Please select a user from the table above or using search.

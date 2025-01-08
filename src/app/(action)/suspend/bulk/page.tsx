@@ -16,8 +16,9 @@ const BulkSuspendPage = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
-  // Fetch details for all selected users
   useEffect(() => {
+    const ids = searchParams.get("ids")?.split(",") || []; // Extract ids inside useEffect
+  
     const fetchUserData = async () => {
       try {
         // Fetch both regular users and admin users simultaneously
@@ -25,17 +26,17 @@ const BulkSuspendPage = () => {
           listAllUsers(),
           listAllAdminUsers(),
         ]);
-  
+    
         // Combine the data from both responses
         const regularUsers = regularUsersResponse.success ? regularUsersResponse.data.data : [];
         const adminUsers = adminUsersResponse.success ? adminUsersResponse.data.data : [];
         const combinedUsers = [...regularUsers, ...adminUsers];
-  
+    
         // Filter the selected users based on the IDs from the URL parameters
         const selectedUserData = combinedUsers.filter((user: User) =>
           ids.includes(user.id.toString())
         );
-  
+    
         // Fetch wallet balances for the selected users
         const usersWithBalance = await Promise.all(
           selectedUserData.map(async (user: User) => {
@@ -43,7 +44,7 @@ const BulkSuspendPage = () => {
             return { ...user, balance: balanceResponse.balance || 0 };
           })
         );
-  
+    
         // Update the users state with the combined and enriched data
         setUsers(usersWithBalance);
       } catch (error) {
@@ -55,7 +56,8 @@ const BulkSuspendPage = () => {
     if (ids.length > 0) {
       fetchUserData();
     }
-  }, [ids]);
+  }, [searchParams]); // Now the useEffect depends on searchParams only
+  
 
   // Handle checkbox selection
   const handleCheckboxChange = (userId: number) => {
@@ -245,7 +247,7 @@ const BulkSuspendPage = () => {
               <button onClick={handleConfirmSuspend} className="px-4 py-2 text-white bg-red-500 border rounded-md">
                 Confirm
               </button>
-            </div>
+            </div> 
           </div>
         </div>
       )}

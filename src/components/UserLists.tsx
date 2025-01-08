@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback  } from "react";
 import Image from "next/image";
 import { User } from "@/app/(pages)/manage-users/page"; // Correct import path
 import Table from "@/components/Tables";
@@ -7,7 +7,7 @@ import { listAllUsers, listAllAdminUsers, unsuspendUserAccount } from "@/utils/a
 import { getWalletBalance } from "@/utils/api"; // Import the wallet balance API function
 import { useRouter } from "next/navigation"; // Correct way to import useRouter
 import { toast } from "react-toastify";
-import Link from "next/link";
+
 
 const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React.SetStateAction<User[]>> }) => {
   const [userData, setUserData] = useState<User[]>([]); // State to store fetched user data
@@ -106,18 +106,19 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
   };
 
   // Save selectedRows to localStorage with error handling
-  const saveSelectedRowsToLocalStorage = (selectedRows: number[]) => {
+  const saveSelectedRowsToLocalStorage = useCallback((selectedRows: number[]) => {
     if (!isLocalStorageAvailable()) {
       console.error("localStorage is not available. Cannot save selectedRows.");
       return;
     }
-
+  
     try {
       localStorage.setItem("selectedRows", JSON.stringify(selectedRows));
     } catch (error) {
       console.error("Error saving to localStorage:", error);
     }
-  };
+  }, []);
+  
 
   // Fetch all users on component mount
   useEffect(() => {
@@ -125,15 +126,15 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
       try {
         // Fetch regular users and admin users simultaneously
         const [regularUsersResponse, adminUsersResponse] = await Promise.all([
-          listAllUsers(currentPage, itemsPerPage),
+          listAllUsers(currentPage, itemsPerPage),  // itemsPerPage is used here
           listAllAdminUsers(currentPage, itemsPerPage),
         ]);
-
+  
         // Combine the data from both responses
         const regularUsers = regularUsersResponse.success ? regularUsersResponse.data.data : [];
         const adminUsers = adminUsersResponse.success ? adminUsersResponse.data.data : [];
         const combinedUsers = [...regularUsers, ...adminUsers];
-
+  
         // Fetch wallet balances for all users
         const updatedUsers = await Promise.all(
           combinedUsers.map(async (user: User) => {
@@ -153,7 +154,7 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
             }
           })
         );
-
+  
         // Update the userData state with the combined and enriched data
         setUserData(updatedUsers);
       } catch (error: unknown) {
@@ -164,9 +165,10 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
         }
       }
     };
-
+  
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, itemsPerPage]); // Add itemsPerPage as a dependency
+  
 
   // Initialize selectedRows from localStorage after component mount
   useEffect(() => {
@@ -201,18 +203,19 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
     const validSelectedRows = selectedRows.filter((id) =>
       userData.some((user) => user.id === id)
     );
-
+  
     if (validSelectedRows.length !== selectedRows.length) {
       setSelectedRows(validSelectedRows);
       saveSelectedRowsToLocalStorage(validSelectedRows);
     }
-
+  
     // Update selectedUsers
     const newSelectedUsers = userData.filter((user) =>
       selectedRows.includes(user.id)
     );
     setSelectedUsers(newSelectedUsers);
-  }, [userData]);
+  }, [userData, selectedRows, setSelectedUsers, saveSelectedRowsToLocalStorage]); // Add missing dependencies
+  
 
   const handleRowSelect = (id: number) => {
     setSelectedRows((prevSelectedRows) => {
@@ -477,7 +480,7 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
 
                   {/* Dropdown Menu */}
                   {dropdownOpen[item.id] && (
-                    <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-md z-10">
+                    <div className="absolute -top-14 mt-2 w-32 bg-white border border-gray-200 rounded shadow-md z-10">
                       <ul>
                         {item.is_active ? (
                           <li>

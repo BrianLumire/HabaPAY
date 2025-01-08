@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { User } from "@/app/(pages)/manage-users/page";
-import { listAllUsers,listAllAdminUsers,deleteUserAccount, getWalletBalance } from "@/utils/api"; // Import the API function to fetch users
+import { listAllUsers, listAllAdminUsers, deleteUserAccount, getWalletBalance } from "@/utils/api"; // Import the API function to fetch users
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
@@ -14,9 +14,11 @@ const BulkDeletePage = () => {
   const ids = searchParams.get("ids")?.split(",") || []; // Extract user IDs from query params
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]); // Track selected users
   const [users, setUsers] = useState<User[]>([]); // Store fetched user data
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
 
-  // Fetch details for all selected users
   useEffect(() => {
+    const ids = searchParams.get("ids")?.split(",") || []; // Extract ids inside useEffect
+  
     const fetchUserData = async () => {
       try {
         // Fetch both regular users and admin users simultaneously
@@ -24,17 +26,17 @@ const BulkDeletePage = () => {
           listAllUsers(),
           listAllAdminUsers(),
         ]);
-  
+    
         // Combine the data from both responses
         const regularUsers = regularUsersResponse.success ? regularUsersResponse.data.data : [];
         const adminUsers = adminUsersResponse.success ? adminUsersResponse.data.data : [];
         const combinedUsers = [...regularUsers, ...adminUsers];
-  
+    
         // Filter the selected users based on the IDs from the URL parameters
         const selectedUserData = combinedUsers.filter((user: User) =>
           ids.includes(user.id.toString())
         );
-  
+    
         // Fetch wallet balances ONLY for selected users
         const usersWithBalance = await Promise.all(
           selectedUserData.map(async (user: User) => {
@@ -48,7 +50,7 @@ const BulkDeletePage = () => {
             }
           })
         );
-  
+    
         // Update the users state with the combined and enriched data
         setUsers(usersWithBalance);
       } catch (error) {
@@ -61,7 +63,8 @@ const BulkDeletePage = () => {
     if (ids.length > 0) {
       fetchUserData();
     }
-  }, [ids]);
+  }, [searchParams]); // Now the useEffect depends on searchParams only
+  
   // Handle checkbox selection
   const handleCheckboxChange = (userId: number) => {
     setSelectedUsers((prev) =>
@@ -71,10 +74,16 @@ const BulkDeletePage = () => {
     );
   };
 
-  // Handle bulk deletion
-  const handleBulkDelete = async () => {
+  // Open confirmation modal
+  const handleBulkDeleteClick = () => {
+    if (selectedUsers.length > 0) {
+      setIsModalOpen(true); // Open modal when users are selected
+    }
+  };
+
+  // Handle confirmation of deletion
+  const handleConfirmDelete = async () => {
     try {
-      // Loop over selected users and delete each one
       for (const userId of selectedUsers) {
         await deleteUserAccount(userId); // Call the delete API function
         toast.success(`User deleted successfully!`);
@@ -83,7 +92,14 @@ const BulkDeletePage = () => {
     } catch (error) {
       console.error("Error deleting users:", error);
       toast.error("Failed to delete users. Please try again.");
+    } finally {
+      setIsModalOpen(false); // Close the modal after deletion
     }
+  };
+
+  // Handle cancellation of deletion
+  const handleCancelDelete = () => {
+    setIsModalOpen(false); // Close the modal without making any changes
   };
 
   return (
@@ -167,22 +183,6 @@ const BulkDeletePage = () => {
                   {user.balance !== null ? user.balance : "Loading..."}
                 </span>
               </div>
-              <div className="flex items-center">
-                <p className="font-ibmPlexSans font-medium">Business:</p>
-                <span className="font-ibmPlexSans">n/a</span>
-              </div>
-              <div className="flex items-center">
-                <p className="font-ibmPlexSans font-medium">Created:</p>
-                <span className="font-ibmPlexSans">
-                  {user.created_at
-                    ? new Date(user.created_at).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })
-                    : "Loading..."}
-                </span>
-              </div>
             </div>
 
             {/* Other Actions */}
@@ -195,10 +195,6 @@ const BulkDeletePage = () => {
               <div className="flex items-center gap-3 bg-[#FFF7E8]">
                 <Image src="/delete.svg" alt="" width={19} height={19} />
                 <span className="font-ibmPlexSans text-black">Delete</span>
-              </div>
-              <div className="flex items-center gap-3 bg-[#FFF7E8]">
-                <Image src="/primary.svg" alt="" width={19} height={19} />
-                <span className="font-ibmPlexSans text-black">Contact</span>
               </div>
             </div>
           </div>
@@ -213,7 +209,7 @@ const BulkDeletePage = () => {
             Cancel
           </button>
           <button
-            onClick={handleBulkDelete}
+            onClick={handleBulkDeleteClick}
             disabled={selectedUsers.length === 0}
             className={`px-9 md:px-14 py-1 text-white text-lg border border-[#FDAC15] ${
               selectedUsers.length === 0
@@ -225,6 +221,24 @@ const BulkDeletePage = () => {
           </button>
         </div>
       </div>
+
+  {/* Confirmation Modal */}
+  {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <p className="text-lg font-semibold mb-4">Are you sure you want to suspend the selected users?</p>
+            <div className="flex justify-between">
+              <button onClick={handleCancelDelete} className="px-4 py-2 text-gray-700 border border-[#FDAC15] hover:text-[#FDAC15] rounded-md">
+                Cancel
+              </button>
+              <button onClick={handleConfirmDelete} className="px-4 py-2 text-white bg-red-500 border rounded-md">
+                Confirm
+              </button>
+            </div> 
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

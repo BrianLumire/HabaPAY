@@ -24,7 +24,7 @@ const Transaction = () => {
     };
 
     fetchTransactions();
-  }, []);
+  }, []); // This effect only needs to run once, when the component mounts
 
   // Filter transactions by status
   const filterTransactions = (transactions: TransactionGroup[], status: "pending" | "approved" | "declined") => {
@@ -37,8 +37,12 @@ const Transaction = () => {
   // Handle filter button clicks
   const handleFilterClick = (status: "pending" | "approved" | "declined") => {
     setActiveFilter(status);
-    filterTransactions(transactions, status);
   };
+
+  // Whenever the `activeFilter` changes, reapply the filter to the transactions
+  useEffect(() => {
+    filterTransactions(transactions, activeFilter);
+  }, [activeFilter, transactions]); // This effect depends on `activeFilter` and `transactions`
 
   // Format timestamp to a readable time (e.g., "18.43 PM")
   const formatTime = (timestamp: string) => {
