@@ -7,6 +7,7 @@ import { listAllUsers, listAllAdminUsers, deleteUserAccount, getWalletBalance } 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
+import { Suspense } from "react";
 
 const BulkDeletePage = () => {
   const router = useRouter();
@@ -243,4 +244,13 @@ const BulkDeletePage = () => {
   );
 };
 
-export default BulkDeletePage;
+// Wrap the BulkSuspendPage component in a Suspense boundary
+const BulkDeletePageWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BulkDeletePage />
+    </Suspense>
+  );
+};
+
+export default BulkDeletePageWrapper;

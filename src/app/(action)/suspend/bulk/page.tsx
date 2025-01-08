@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { User } from "@/app/(pages)/manage-users/page";
 import { listAllUsers,listAllAdminUsers, getWalletBalance, suspendUserAccount } from "@/utils/api";
@@ -254,5 +255,13 @@ const BulkSuspendPage = () => {
     </div>
   );
 };
+// Wrap the BulkSuspendPage component in a Suspense boundary
+const BulkSuspendPageWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BulkSuspendPage />
+    </Suspense>
+  );
+};
 
-export default BulkSuspendPage;
+export default BulkSuspendPageWrapper;
