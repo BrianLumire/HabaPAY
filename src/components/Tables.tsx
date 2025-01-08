@@ -5,7 +5,6 @@ type TableProps = {
   columns: { header: string; accessor: string }[];
   data: any[];
   renderRow: (item: any) => React.ReactNode;
-  onRowSelect?: (id: any) => void; // Optional handler for row selection
   onSelectAll?: (selected: boolean) => void; // Optional handler for "select all"
   selectedIds?: any[]; // Selected row ids, if applicable
 };
@@ -14,7 +13,7 @@ const Tables = ({
   columns,
   data,
   renderRow,
-  onRowSelect,
+ 
   onSelectAll,
   selectedIds = [],
 }: TableProps) => {

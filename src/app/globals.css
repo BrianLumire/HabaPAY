@@ -98,6 +98,20 @@ input[type="checkbox"]:checked {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+/* Change tick icon and progress bar color for react-toastify */
+.custom-toast {
+  background-color: #222; /* Dark background for the toast */
+  color: white; /* White text color */
+}
+
+.custom-toast .Toastify__progress-bar {
+  background-color: #FDAC15 !important; /* Yellow progress bar */
+}
+
+.custom-toast .Toastify__toast-icon > svg {
+  fill: #FDAC15 !important; /* Yellow tick/checkmark icon */
+}
+
 
 @layer base {
   * {

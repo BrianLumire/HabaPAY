@@ -1,40 +1,59 @@
-"use client";
 import React from "react";
-import { MapContainer, TileLayer, Polygon, Tooltip } from "react-leaflet"; // Import necessary components from react-leaflet
-import { LatLngExpression } from "leaflet"; // Correct type for LatLng
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerIconShadow from "leaflet/dist/images/marker-shadow.png";
 
-// Sample coordinates for one of Kenya's counties (e.g., Nairobi) - this should be replaced with actual county data
-const kenyaCountyData = {
-  name: "Nairobi",
-  coordinates: [
-    [1.2868, 36.8219], // Coordinates of Nairobi (this is just a sample; use actual county boundaries)
-  ],
-  users: 500, // Example of user data in this county
-};
+// Fix for default marker icon in React-Leaflet
+const DefaultIcon = L.icon({
+  iconUrl: markerIcon.src, // Use the `src` property
+  shadowUrl: markerIconShadow.src, // Use the `src` property
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map = () => {
+  // Coordinates for the center of Kenya
+  const kenyaCoordinates: [number, number] = [-0.0236, 37.9062]; // Latitude, Longitude
+
+  // Bounds for Kenya
+  const kenyaBounds = new L.LatLngBounds(
+    [-4.6769, 33.9089], // Southwest coordinates
+    [5.0333, 41.8996] // Northeast coordinates
+  );
+
   return (
-    <div className="w-full h-full"> {/* Ensure the container fills its parent */}
+    <div style={{ position: "relative", height: "500px", width: "100%" }}>
       <MapContainer
-        center={[1.2868, 36.8219]} // Default center of the map (for Nairobi)
-        zoom={6} // Initial zoom level
-        style={{ height: "100%", width: "100%" }} // Make the map fill the container
+        center={kenyaCoordinates} // Center the map on Kenya
+        zoom={6} // Zoom level
+        style={{ height: "100%", width: "100%" }}
+        maxBounds={kenyaBounds} // Restrict the map to Kenya
+        minZoom={6} // Prevent zooming out too far
       >
-        {/* Tile Layer (Map Background) */}
+        {/* Add a tile layer (map tiles) */}
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" // Using OpenStreetMap as the map tile source
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
 
-        {/* Example of a Polygon (Kenya County) */}
-        <Polygon positions={kenyaCountyData.coordinates as LatLngExpression[]} pathOptions={{ color: "blue" }}>
-          <Tooltip>
-            <div>
-              <p>{kenyaCountyData.name}</p>
-              <p>Users: {kenyaCountyData.users}</p>
-            </div>
-          </Tooltip>
-        </Polygon>
+        {/* Add markers for major cities in Kenya */}
+        <Marker position={[-1.2864, 36.8172]}>
+          <Popup>Nairobi, Kenya</Popup>
+        </Marker>
+        <Marker position={[-0.1022, 34.7617]}>
+          <Popup>Kisumu, Kenya</Popup>
+        </Marker>
+        <Marker position={[-3.2175, 40.1191]}>
+          <Popup>Mombasa, Kenya</Popup>
+        </Marker>
+        <Marker position={[0.5276, 35.2697]}>
+          <Popup>Eldoret, Kenya</Popup>
+        </Marker>
       </MapContainer>
     </div>
   );

@@ -131,7 +131,165 @@ export const userData = [
       { src: "/dot3.svg", alt: "More Options" },
     ],
   },
+  // New users added below:
+  {
+    id: 11,
+    isChecked: false,
+    name: "Isaac Wambua",
+    number: "+254719876543",
+    email: "isaac.wambua@gmail.com",
+    balance: "Ksh 3200",
+    status: "Active",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 12,
+    isChecked: false,
+    name: "Janet Muthoni",
+    number: "+254712567890",
+    email: "janet.muthoni@yahoo.com",
+    balance: "Ksh 5800",
+    status: "Suspended",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 13,
+    isChecked: false,
+    name: "Kenny Mwai",
+    number: "+254718765432",
+    email: "kenny.mwai@gmail.com",
+    balance: "Ksh 1150",
+    status: "Active",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 14,
+    isChecked: false,
+    name: "Lilian Okello",
+    number: "+254737654321",
+    email: "lilian.okello@yahoo.com",
+    balance: "Ksh 2450",
+    status: "Suspended",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 15,
+    isChecked: false,
+    name: "Micheal Kamau",
+    number: "+254726789012",
+    email: "micheal.kamau@gmail.com",
+    balance: "Ksh 6600",
+    status: "Active",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 16,
+    isChecked: false,
+    name: "Nancy Adhiambo",
+    number: "+254729876543",
+    email: "nancy.adhiambo@yahoo.com",
+    balance: "Ksh 1900",
+    status: "Suspended",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 17,
+    isChecked: false,
+    name: "Omar Gikunda",
+    number: "+254723456789",
+    email: "omar.gikunda@gmail.com",
+    balance: "Ksh 1300",
+    status: "Active",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 18,
+    isChecked: false,
+    name: "Patricia Mwende",
+    number: "+254730123456",
+    email: "patricia.mwende@yahoo.com",
+    balance: "Ksh 4700",
+    status: "Suspended",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 19,
+    isChecked: false,
+    name: "Quincy Omondi",
+    number: "+254725678901",
+    email: "quincy.omondi@gmail.com",
+    balance: "Ksh 2900",
+    status: "Active",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 20,
+    isChecked: false,
+    name: "Ruth Njeri",
+    number: "+254741234567",
+    email: "ruth.njeri@yahoo.com",
+    balance: "Ksh 1100",
+    status: "Suspended",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 21,
+    isChecked: false,
+    name: "Stephen Mwangangi",
+    number: "+254738765432",
+    email: "stephen.mwangangi@gmail.com",
+    balance: "Ksh 3600",
+    status: "Active",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
+  {
+    id: 22,
+    isChecked: false,
+    name: "Tracy Atieno",
+    number: "+254727654321",
+    email: "tracy.atieno@yahoo.com",
+    balance: "Ksh 9800",
+    status: "Suspended",
+    manage: [
+      { src: "/edit.svg", alt: "Edit" },
+      { src: "/dot3.svg", alt: "More Options" },
+    ],
+  },
 ];
+
 
 
   export const recent = [
@@ -333,7 +491,117 @@ export const userActivities = [
       { action: "Received Ksh 1500", time: "4 days ago.02:00PM" },
     ],
   },
+  // New activities for users 11 to 22
+  {
+    userId: 11,
+    activities: [
+      { action: "Created a HabaPay account", time: "Today.04:00PM" },
+      { action: "Deposited Ksh 200", time: "Yesterday.01:00PM" },
+      { action: "Transferred Ksh 150", time: "3 days ago.11:00AM" },
+      { action: "Made a payment of Ksh 100", time: "4 days ago.02:30PM" },
+    ],
+  },
+  {
+    userId: 12,
+    activities: [
+      { action: "Deposited Ksh 500", time: "Today.09:30AM" },
+      { action: "Made a payment of Ksh 200", time: "Yesterday.06:00PM" },
+      { action: "Transferred Ksh 350", time: "3 days ago.03:00PM" },
+      { action: "Received Ksh 500", time: "4 days ago.04:30PM" },
+    ],
+  },
+  {
+    userId: 13,
+    activities: [
+      { action: "Made a payment of Ksh 250", time: "Today.11:00AM" },
+      { action: "Deposited Ksh 700", time: "Yesterday.04:30PM" },
+      { action: "Withdrew Ksh 300", time: "2 days ago.01:00PM" },
+      { action: "Transferred Ksh 150", time: "3 days ago.05:45PM" },
+    ],
+  },
+  {
+    userId: 14,
+    activities: [
+      { action: "Transferred Ksh 100", time: "Today.10:00AM" },
+      { action: "Withdrew Ksh 150", time: "Yesterday.02:45PM" },
+      { action: "Made a payment of Ksh 350", time: "2 days ago.09:30AM" },
+      { action: "Deposited Ksh 400", time: "3 days ago.06:00PM" },
+    ],
+  },
+  {
+    userId: 15,
+    activities: [
+      { action: "Deposited Ksh 800", time: "Today.12:00PM" },
+      { action: "Transferred Ksh 500", time: "Yesterday.03:00PM" },
+      { action: "Withdrew Ksh 200", time: "2 days ago.10:30AM" },
+      { action: "Made a payment of Ksh 600", time: "3 days ago.04:15PM" },
+    ],
+  },
+  {
+    userId: 16,
+    activities: [
+      { action: "Withdrew Ksh 200", time: "Today.01:30PM" },
+      { action: "Made a payment of Ksh 400", time: "Yesterday.10:00AM" },
+      { action: "Deposited Ksh 500", time: "2 days ago.02:30PM" },
+      { action: "Transferred Ksh 250", time: "3 days ago.11:00AM" },
+    ],
+  },
+  {
+    userId: 17,
+    activities: [
+      { action: "Transferred Ksh 100", time: "Today.05:30PM" },
+      { action: "Deposited Ksh 250", time: "Yesterday.12:00PM" },
+      { action: "Withdrew Ksh 150", time: "2 days ago.03:30PM" },
+      { action: "Made a payment of Ksh 200", time: "3 days ago.06:30PM" },
+    ],
+  },
+  {
+    userId: 18,
+    activities: [
+      { action: "Deposited Ksh 700", time: "Today.09:00AM" },
+      { action: "Transferred Ksh 100", time: "Yesterday.05:00PM" },
+      { action: "Withdrew Ksh 500", time: "2 days ago.02:00PM" },
+      { action: "Made a payment of Ksh 350", time: "3 days ago.03:00PM" },
+    ],
+  },
+  {
+    userId: 19,
+    activities: [
+      { action: "Deposited Ksh 900", time: "Today.03:30PM" },
+      { action: "Transferred Ksh 600", time: "Yesterday.01:30PM" },
+      { action: "Made a payment of Ksh 500", time: "2 days ago.02:00PM" },
+      { action: "Received Ksh 300", time: "3 days ago.11:45AM" },
+    ],
+  },
+  {
+    userId: 20,
+    activities: [
+      { action: "Withdrew Ksh 400", time: "Today.02:00PM" },
+      { action: "Made a payment of Ksh 600", time: "Yesterday.04:00PM" },
+      { action: "Deposited Ksh 300", time: "2 days ago.01:30PM" },
+      { action: "Transferred Ksh 200", time: "3 days ago.10:30AM" },
+    ],
+  },
+  {
+    userId: 21,
+    activities: [
+      { action: "Transferred Ksh 200", time: "Today.09:45AM" },
+      { action: "Withdrew Ksh 100", time: "Yesterday.11:00AM" },
+      { action: "Deposited Ksh 400", time: "2 days ago.03:00PM" },
+      { action: "Made a payment of Ksh 150", time: "3 days ago.02:00PM" },
+    ],
+  },
+  {
+    userId: 22,
+    activities: [
+      { action: "Received Ksh 1200", time: "Today.10:30AM" },
+      { action: "Withdrew Ksh 500", time: "Yesterday.01:15PM" },
+      { action: "Transferred Ksh 300", time: "2 days ago.05:00PM" },
+      { action: "Deposited Ksh 200", time: "3 days ago.12:30PM" },
+    ],
+  },
 ];
+
 
 export const users = [
   { userId: 1, userName: "James Nakamoto" },

@@ -1,8 +1,8 @@
 "use client";
 
-import { recent } from "@/data";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useState } from "react";
+import { getAnalyticsActivity } from "@/utils/api"; // Import the API function
 
 type Recent = {
   id: number;
@@ -26,12 +26,46 @@ const columns = [
 
 const RecentTables = () => {
   const [sortConfig, setSortConfig] = useState<{
-    key: keyof Recent; // Ensures key is a valid property of Recent
-    direction: "asc" | "desc"; // Direction can only be "asc" or "desc"
+    key: keyof Recent;
+    direction: "asc" | "desc";
   }>({
-    key: "balance",  // Default sort by 'balance'
+    key: "balance",
     direction: "asc",
   });
+
+  const [data, setData] = useState<Recent[]>([]); // State to store fetched data
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [error, setError] = useState<string | null>(null); // Error state
+
+  // Fetch data from the API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAnalyticsActivity(1, 10); // Fetch the first page with 10 records
+        const apiData = response.data.data; // Access the nested `data` array
+
+        // Map the API response to match the `Recent` type
+        const mappedData = apiData.map((item: any) => ({
+          id: item.user_id,
+          name: item.username,
+          balance: `Ksh${item.balance}`,
+          transactions: item.total_transactions,
+          applaunches: item.app_launches,
+          status: item.status,
+          manage1: "/edit.svg", // Use /edit.svg
+          manage2: "/dot3.svg", // Use /dot3.svg
+        }));
+
+        setData(mappedData); // Update the state with the mapped data
+      } catch (error: any) {
+        setError(error.message || "Failed to fetch data."); // Handle errors
+      } finally {
+        setIsLoading(false); // Set loading to false
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const requestSort = (key: keyof Recent) => {
     let direction: "asc" | "desc" = "asc";
@@ -41,7 +75,7 @@ const RecentTables = () => {
     setSortConfig({ key, direction });
   };
 
-  const sortedData = [...recent].sort((a, b) => {
+  const sortedData = [...data].sort((a, b) => {
     const aValue = a[sortConfig.key];
     const bValue = b[sortConfig.key];
 
@@ -61,7 +95,7 @@ const RecentTables = () => {
   const renderRow = (item: Recent) => {
     return (
       <tr key={item.id} className="border-b border-gray-300 py-4 hover:bg-slate-100">
-        <td scope="row" className="font-ibmPlexSans py-[2px] pl-2  text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">
+        <td scope="row" className="font-ibmPlexSans py-[2px] pl-2 text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">
           {item.name}
         </td>
         <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">
@@ -76,37 +110,46 @@ const RecentTables = () => {
         <td className="font-ibmPlexSans text-sm sm:text-base whitespace-nowrap sm:whitespace-normal">
           {item.status}
         </td>
-        <td className="flex items-center whitespace-nowrap sm:whitespace-normal gap-5">
+        <td className="flex  whitespace-nowrap sm:whitespace-normal gap-5">
           <Image
-            src={item.manage1 || "/default-icon.svg"}
-            alt={`${item.name}'s action 1`}
-            height={17}
-            width={17}
+            src="/edit.svg" // Use /edit.svg
+            alt={`Edit ${item.name}`}
+            height={21}
+            width={21}
           />
           <Image
-            src={item.manage2 || "/default-icon.svg"}
-            alt={`${item.name}'s action 2`}
-            height={17}
-            width={17}
+            src="/dot3.svg" // Use /dot3.svg
+            alt={`More options for ${item.name}`}
+            height={21}
+            width={21}
           />
         </td>
       </tr>
     );
   };
 
+  // Handle loading state
+  if (isLoading) {
+    return <div className="flex justify-center items-center h-64">Loading...</div>;
+  }
+
+  // Handle error state
+  if (error) {
+    return <div className="flex justify-center items-center h-64 text-red-500">{error}</div>;
+  }
+
   return (
-    <>
-    <div className="overflow-x-auto ">
-    <table className=" w-full  min-w-[800px] md:table mb-4">
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[800px] md:table mb-4">
         <thead>
           <tr>
             {columns.map((col) => (
               <th
                 key={col.accessor}
                 className="py-4 text-sm sm:text-base cursor-pointer"
-                onClick={() => requestSort(col.accessor as keyof Recent)} // Cast the accessor to keyof Recent
+                onClick={() => requestSort(col.accessor as keyof Recent)}
               >
-                <div className="flex  items-center ">
+                <div className="flex items-center">
                   <span>{col.header}</span>
                   {col.icon && <img src={col.icon} alt={`${col.header} icon`} className="w-4 h-4" />}
                 </div>
@@ -119,8 +162,6 @@ const RecentTables = () => {
         </tbody>
       </table>
     </div>
-   
-    </>
   );
 };
 
