@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { User } from "@/app/(pages)/manage-users/page";
 import { listAllUsers, listAllAdminUsers, deleteUserAccount, getWalletBalance } from "@/utils/api"; // Import the API function to fetch users
@@ -11,14 +10,17 @@ import Image from "next/image";
 const BulkDeletePage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const ids = searchParams.get("ids")?.split(",") || []; // Extract user IDs from query params
+  
+  // Use useMemo to memoize the ids value
+  const ids = useMemo(() => {
+    return searchParams.get("ids")?.split(",") || [];
+  }, [searchParams]); // Recalculate ids only when searchParams change
+
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]); // Track selected users
   const [users, setUsers] = useState<User[]>([]); // Store fetched user data
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
 
   useEffect(() => {
-    const ids = searchParams.get("ids")?.split(",") || []; // Extract ids inside useEffect
-  
     const fetchUserData = async () => {
       try {
         // Fetch both regular users and admin users simultaneously
@@ -59,11 +61,11 @@ const BulkDeletePage = () => {
         toast.error("Failed to fetch user data. Please try again.");
       }
     };
-  
+
     if (ids.length > 0) {
       fetchUserData();
     }
-  }, [searchParams]); // Now the useEffect depends on searchParams only
+  }, [ids]); // Now the useEffect depends on ids directly
   
   // Handle checkbox selection
   const handleCheckboxChange = (userId: number) => {
@@ -166,8 +168,8 @@ const BulkDeletePage = () => {
               </div>
             </div>
 
-            {/* Account Details */}
-            <div className="flex flex-col gap-2 mb-3">
+             {/* Account Details */}
+             <div className="flex flex-col gap-2 mb-3">
               <h3 className="mb-3 font-ibmPlexSans font-semibold text-lg">
                 Account Details
               </h3>
@@ -183,22 +185,42 @@ const BulkDeletePage = () => {
                   {user.balance !== null ? user.balance : "Loading..."}
                 </span>
               </div>
+              <div className="flex items-center">
+                <p className="font-ibmPlexSans font-medium">Business:</p>
+                <span className="font-ibmPlexSans">n/a</span>
+              </div>
+              <div className="flex items-center">
+                <p className="font-ibmPlexSans font-medium">Created:</p>
+                <span className="font-ibmPlexSans">
+                  {user.created_at
+                    ? new Date(user.created_at).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })
+                    : "Loading..."}
+                </span>
+              </div>
             </div>
 
-            {/* Other Actions */}
-            <div className="flex flex-col gap-4 mb-5">
-              <h3 className="mb-3 font-ibmPlexSans font-semibold text-lg">Other Actions</h3>
-              <div className="flex items-center gap-3 bg-[#FFF7E8]">
-                <Image src="/edit.svg" alt="" width={23} height={23} />
-                <span className="font-ibmPlexSans text-black">Edit Profile</span>
-              </div>
-              <div className="flex items-center gap-3 bg-[#FFF7E8]">
-                <Image src="/delete.svg" alt="" width={19} height={19} />
-                <span className="font-ibmPlexSans text-black">Delete</span>
-              </div>
-            </div>
-          </div>
-        ))}
+         {/* Other Actions */}
+                   <div className="flex flex-col gap-4 mb-5">
+                     <h3 className="mb-3 font-ibmPlexSans font-semibold text-lg">Other Actions</h3>
+                     <div className="flex items-center gap-3 bg-[#FFF7E8]">
+                       <Image src="/edit.svg" alt="" width={23} height={23} />
+                       <span className="font-ibmPlexSans text-black">Edit Profile</span>
+                     </div>
+                     <div className="flex items-center gap-3 bg-[#FFF7E8]">
+                       <Image src="/suspend.svg" alt="" width={19} height={19} />
+                       <span className="font-ibmPlexSans text-black">Suspend</span>
+                     </div>
+                     <div className="flex items-center gap-3 bg-[#FFF7E8]">
+                       <Image src="/delete.svg" alt="" width={23} height={23} />
+                       <span className="font-ibmPlexSans text-black">Delete</span>
+                     </div>
+                   </div>
+                 </div>
+               ))}
 
         {/* Action Buttons */}
         <div className="bg-slate-100 flex mt-10 md:mt-36 gap-4">

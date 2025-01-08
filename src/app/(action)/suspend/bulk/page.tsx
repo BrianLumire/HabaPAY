@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import { User } from "@/app/(pages)/manage-users/page";
-import { listAllUsers,listAllAdminUsers, getWalletBalance, suspendUserAccount } from "@/utils/api";
+import { listAllUsers, listAllAdminUsers, getWalletBalance, suspendUserAccount } from "@/utils/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -32,14 +32,9 @@ const BulkSuspendPage = () => {
         const adminUsers = adminUsersResponse.success ? adminUsersResponse.data.data : [];
         const combinedUsers = [...regularUsers, ...adminUsers];
     
-        // Filter the selected users based on the IDs from the URL parameters
-        const selectedUserData = combinedUsers.filter((user: User) =>
-          ids.includes(user.id.toString())
-        );
-    
         // Fetch wallet balances for the selected users
         const usersWithBalance = await Promise.all(
-          selectedUserData.map(async (user: User) => {
+          combinedUsers.map(async (user: User) => {
             const balanceResponse = await getWalletBalance(user.phone);
             return { ...user, balance: balanceResponse.balance || 0 };
           })
@@ -57,7 +52,13 @@ const BulkSuspendPage = () => {
       fetchUserData();
     }
   }, [searchParams]); // Now the useEffect depends on searchParams only
-  
+
+  // Memoize the filtered list of selected users
+  const selectedUserData = useMemo(() => {
+    return users.filter((user: User) =>
+      ids.includes(user.id.toString())
+    );
+  }, [ids, users]); // Recalculate only when `ids` or `users` change
 
   // Handle checkbox selection
   const handleCheckboxChange = (userId: number) => {
@@ -90,6 +91,7 @@ const BulkSuspendPage = () => {
       setIsModalOpen(false); // Close the modal after suspension
     }
   };
+
   // Handle cancellation of suspension
   const handleCancelSuspend = () => {
     setIsModalOpen(false);
@@ -119,7 +121,7 @@ const BulkSuspendPage = () => {
         </div>
 
         {/* Render user details */}
-        {users.map((user) => (
+        {selectedUserData.map((user) => (
           <div
             key={user.id}
             className={`shadow-xl md:justify-between md:px-36 px-7 md:w-[70%] md:items-center border border-gray-200 flex flex-col md:flex-row transition-all duration-300 mb-8 ${
@@ -206,15 +208,15 @@ const BulkSuspendPage = () => {
                 <span className="font-ibmPlexSans text-black">Suspend</span>
               </div>
               <div className="flex items-center gap-3 bg-[#FFF7E8]">
-                <Image src="/primary.svg" alt="" width={19} height={19} />
-                <span className="font-ibmPlexSans text-black">Contact</span>
+                <Image src="/delete.svg" alt="" width={23} height={23} />
+                <span className="font-ibmPlexSans text-black">Delete</span>
               </div>
             </div>
           </div>
         ))}
 
-        {/* Action Buttons */}
-        <div className="bg-slate-100 flex mt-10 md:mt-36 gap-4">
+          {/* Action Buttons */}
+          <div className="bg-slate-100 flex mt-10 md:mt-36 gap-4">
           <button
             className="px-9 md:px-14 py-1 text-[#FDAC15] text-lg border border-[#FDAC15] rounded-sm font-ibmPlexSans font-medium"
             onClick={() => router.push("/manage-users")}
@@ -234,9 +236,9 @@ const BulkSuspendPage = () => {
           </button>
         </div>
       </div>
-
       {/* Confirmation Modal */}
-      {isModalOpen && (
+       {/* Confirmation Modal */}
+  {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
             <p className="text-lg font-semibold mb-4">Are you sure you want to suspend the selected users?</p>
