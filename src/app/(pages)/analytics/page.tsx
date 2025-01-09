@@ -2,9 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import AppChart from "@/components/AppChart";
-import RecentTable from "@/components/RecentTables";
-import Map from "@/components/Map";
+import dynamic from "next/dynamic";
+
+// Dynamically import components with SSR disabled
+const AppChart = dynamic(() => import("@/components/AppChart"), { ssr: false });
+const RecentTable = dynamic(() => import("@/components/RecentTables"), { ssr: false });
+const Map = dynamic(() => import("@/components/Map"), { ssr: false });
+
 import { getAnalyticsOverview } from "@/utils/api";
 
 // Static Data for AppChart (fixed data, no API calls)
