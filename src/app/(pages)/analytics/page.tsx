@@ -7,7 +7,7 @@ import RecentTable from "@/components/RecentTables";
 import Map from "@/components/Map";
 import { getAnalyticsOverview } from "@/utils/api";
 
-// Sample Data for AppChart as fallback
+// Static Data for AppChart (fixed data, no API calls)
 const defaultData: ChartDataItem[] = [
   { name: "Sun", NewUsers: 10, NationalReach: 11 },
   { name: "Mon", NewUsers: 80, NationalReach: 13 },
@@ -44,12 +44,11 @@ interface ChartDataItem {
 
 const Analyticspage: React.FC = () => {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
-  const [chartData, setChartData] = useState<ChartDataItem[]>(defaultData);
   const [selectedMetric, setSelectedMetric] = useState<"All" | "NewUsers" | "NationalReach">("All");
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    // Fetch analytics data from the server on mount
+    // Fetch analytics data for the card section only
     const fetchData = async () => {
       try {
         const response = await getAnalyticsOverview();
@@ -60,14 +59,6 @@ const Analyticspage: React.FC = () => {
           national_reach: { total_users: 0, total_counties: 0 },
         };
         setAnalyticsData(data);
-
-        // Sample data for chart (you could replace it with real data later)
-        const generatedChartData: ChartDataItem[] = defaultData.map(item => ({
-          ...item,
-          NewUsers: Math.floor(Math.random() * 300),
-          NationalReach: Math.floor(Math.random() * 50),
-        }));
-        setChartData(generatedChartData);
       } catch (err) {
         console.error("API request failed:", err);
       }
@@ -186,7 +177,7 @@ const Analyticspage: React.FC = () => {
 
             {/* Chart Display */}
             <div className="w-full text-black mt-3 h-[450px]">
-              <AppChart selectedMetric={selectedMetric} data={chartData} />
+              <AppChart selectedMetric={selectedMetric} data={defaultData} />
             </div>
           </div>
         </div>
