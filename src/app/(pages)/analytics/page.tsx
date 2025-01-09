@@ -1,13 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import AppChart from "@/components/AppChart"; // Assuming AppChart is imported here
+import AppChart from "@/components/AppChart";
 import RecentTable from "@/components/RecentTables";
 import Map from "@/components/Map";
-import { getAnalyticsOverview } from "@/utils/api"; // Import the API function
+import { getAnalyticsOverview } from "@/utils/api";
 
 // Sample Data for AppChart as fallback
-const defaultData = [
+const defaultData: ChartDataItem[] = [
   { name: "Sun", NewUsers: 10, NationalReach: 11 },
   { name: "Mon", NewUsers: 80, NationalReach: 13 },
   { name: "Tue", NewUsers: 200, NationalReach: 28 },
@@ -17,59 +18,76 @@ const defaultData = [
   { name: "Sat", NewUsers: 300, NationalReach: 43 },
 ];
 
-const Analyticspage = () => {
-  // State to store analytics data fetched from API
-  const [analyticsData, setAnalyticsData] = useState({
-    weekly_transactions: { total: 0, percentage: 0 },
-    weekly_signups: { total: 0, percentage: 0 },
-    weekly_exchanges: { total: 0, percentage: 0 },
-    national_reach: { total_users: 0, total_counties: 0 },
-  });
+// Define interfaces for the props
+interface WeeklyData {
+  total: number;
+  percentage: number;
+}
 
-  // State for AppChart data
-  const [chartData, setChartData] = useState(defaultData);
+interface NationalReach {
+  total_users: number;
+  total_counties: number;
+}
 
-  // State for managing the selected metric (All, NewUsers, NationalReach)
+interface AnalyticsData {
+  weekly_transactions: WeeklyData;
+  weekly_signups: WeeklyData;
+  weekly_exchanges: WeeklyData;
+  national_reach: NationalReach;
+}
+
+interface ChartDataItem {
+  name: string;
+  NewUsers: number;
+  NationalReach: number;
+}
+
+const Analyticspage: React.FC = () => {
+  const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
+  const [chartData, setChartData] = useState<ChartDataItem[]>(defaultData);
   const [selectedMetric, setSelectedMetric] = useState<"All" | "NewUsers" | "NationalReach">("All");
-  // State to manage visibility of the filter dropdown
   const [showDropdown, setShowDropdown] = useState(false);
 
-  // Fetch data from API
-  const fetchAnalyticsData = async () => {
-    try {
-      const response = await getAnalyticsOverview(); // Call the API function
-      if (response.success) {
-        setAnalyticsData(response.data);
-
-        // Update chart data based on API response (use a transformation if needed)
-        const newChartData = defaultData.map((item, index) => ({
-          ...item,
-          NewUsers: Math.floor(Math.random() * 300), // Replace with actual logic
-          NationalReach: Math.floor(Math.random() * 50), // Replace with actual logic
-        }));
-        setChartData(newChartData);
-      } else {
-        console.error("Error fetching analytics data:", response.message);
-      }
-    } catch (err) {
-      console.error("API request failed:", err);
-    }
-  };
-
   useEffect(() => {
-    fetchAnalyticsData();
-  }, []);
+    // Fetch analytics data from the server on mount
+    const fetchData = async () => {
+      try {
+        const response = await getAnalyticsOverview();
+        const data = response.success ? response.data : {
+          weekly_transactions: { total: 0, percentage: 0 },
+          weekly_signups: { total: 0, percentage: 0 },
+          weekly_exchanges: { total: 0, percentage: 0 },
+          national_reach: { total_users: 0, total_counties: 0 },
+        };
+        setAnalyticsData(data);
 
-  // Toggle dropdown visibility
+        // Sample data for chart (you could replace it with real data later)
+        const generatedChartData: ChartDataItem[] = defaultData.map(item => ({
+          ...item,
+          NewUsers: Math.floor(Math.random() * 300),
+          NationalReach: Math.floor(Math.random() * 50),
+        }));
+        setChartData(generatedChartData);
+      } catch (err) {
+        console.error("API request failed:", err);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures this runs once on component mount
+
   const handleFilterClick = () => {
     setShowDropdown((prev) => !prev);
   };
 
-  // Handle metric selection
   const handleMetricSelect = (metric: "All" | "NewUsers" | "NationalReach") => {
     setSelectedMetric(metric);
-    setShowDropdown(false); // Close dropdown
+    setShowDropdown(false);
   };
+
+  if (!analyticsData) {
+    return <div>Loading...</div>; // Handle the loading state while data is fetched
+  }
 
   const { weekly_transactions, weekly_signups, weekly_exchanges, national_reach } = analyticsData;
 
