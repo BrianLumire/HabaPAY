@@ -78,13 +78,15 @@ export default function Sidebar({
 
   // Handle Confirm Log out
   const handleConfirmLogout = () => {
-    // Add your logout logic here
-    console.log("Logged out");
-    // Clear session data or tokens
-    localStorage.clear();
-    sessionStorage.clear();
-    // Redirect to login page
-    window.location.href = "/login"; // Adjust path as necessary
+    // Clear tokens from localStorage
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+  
+    // Optionally, clear any other user-related data from localStorage
+    localStorage.removeItem("userData"); // Example: Clear user data if stored
+  
+    // Redirect to the login page
+    window.location.href = "/login"; // Adjust the path as necessary
   };
 
   // Handle Cancel Log out

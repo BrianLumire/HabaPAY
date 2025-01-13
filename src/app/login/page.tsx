@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link"; // Import Link from next/link
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { login, loginWithGoogle, loginWithPin } from "@/utils/api"; // Import loginWithPin
 import Image from "next/image";
@@ -193,6 +194,16 @@ const Loginpage = () => {
                   />
                 </div>
               )}
+
+              {/* Forgot Password or Forgot PIN Link */}
+              <div className="text-center">
+                <Link
+                  href={loginMethod === "password" ? "/login/reset-password" : "/login/reset-pin"}
+                  className="text-[#FDAC15] hover:underline"
+                >
+                  {loginMethod === "password" ? "Forgot Password?" : "Forgot PIN?"}
+                </Link>
+              </div>
 
               {/* Submit Button */}
               <div className="flex items-center justify-center">

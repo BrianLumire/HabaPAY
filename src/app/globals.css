@@ -98,20 +98,72 @@ input[type="checkbox"]:checked {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
-/* Change tick icon and progress bar color for react-toastify */
-.custom-toast {
-  background-color: #222; /* Dark background for the toast */
-  color: white; /* White text color */
+/* Custom Toast Styles */
+/* Custom Toast Styles */
+/* Custom Toast Styles */
+.Toastify__toast-container {
+  position: fixed; /* Ensure the container is positioned relative to the viewport */
+  width: 100%; /* Full width on small screens */
+  max-width: 300px; /* Limit width on larger screens */
+  padding: 0 16px; /* Add padding for small screens */
+  z-index: 9999; /* Ensure toasts are above other elements */
 }
 
-.custom-toast .Toastify__progress-bar {
-  background-color: #FDAC15 !important; /* Yellow progress bar */
+.Toastify__toast {
+  margin-bottom: 8px; /* Space between toasts */
+  border-radius: 8px; /* Rounded corners */
+  font-family: 'IBM Plex Sans', sans-serif; /* Use your app's font */
+  font-size: 14px; /* Adjust font size */
+  padding: 12px 16px; /* Padding inside the toast */
+  color: white; /* Default text color */
+  background-color: #1a1a1a; /* Dark background for toasts */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
-.custom-toast .Toastify__toast-icon > svg {
-  fill: #FDAC15 !important; /* Yellow tick/checkmark icon */
+.Toastify__toast--success {
+  background-color: #4caf50; /* Green for success */
+  color: white; /* White text for better contrast */
 }
 
+.Toastify__toast--error {
+  background-color: #f44336; /* Red for error */
+  color: white; /* White text for better contrast */
+}
+
+.Toastify__toast--warning {
+  background-color: #FDAC15; /* Your project's orange for warning */
+  color: black; /* Black text for better contrast */
+}
+
+.Toastify__toast--info {
+  background-color: #2196f3; /* Blue for info */
+  color: white; /* White text for better contrast */
+}
+
+.Toastify__toast-body {
+  margin: 0; /* Remove default margin */
+}
+
+.Toastify__progress-bar {
+  height: 3px; /* Thinner progress bar */
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+}
+
+/* Responsive Styles */
+@media (max-width: 480px) {
+  .Toastify__toast-container {
+    width: 90%; /* Slightly smaller width on very small screens */
+    left: 50%; /* Center the container */
+    transform: translateX(-50%); /* Center the container */
+    bottom: 16px; /* Position the container at the bottom of the screen */
+  }
+
+  .Toastify__toast {
+    font-size: 12px; /* Smaller font size for small screens */
+    padding: 10px 12px; /* Smaller padding for small screens */
+    width: 100%; /* Ensure the toast takes up the full width of the container */
+  }
+}
 
 @layer base {
   * {

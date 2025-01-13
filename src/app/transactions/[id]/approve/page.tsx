@@ -61,8 +61,8 @@ const ConfirmIdentityPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+    <div className="flex justify-center items-center min-h-screen ">
+      <div className="w-full max-w-md p-8 border border-gray-200 rounded-lg shadow-lg">
         {/* Close Button */}
         <div className="flex justify-end pr-2 mb-6">
           <div

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { TransactionsResponse } from "@/types/types"; // 
+import { TransactionsResponse } from "@/types/types"; 
+
 // Base URL for the API
 const API_URL = 'https://api.frameworkconcepts.co.ke';
 
@@ -352,6 +353,7 @@ const listTransactions = async (): Promise<TransactionsResponse> => {
     throw new Error(error.response?.data?.message || "Failed to fetch transactions.");
   }
 };
+
 // Approve a Transaction API function
 const approveTransaction = async (id: number) => {
   try {
@@ -361,7 +363,8 @@ const approveTransaction = async (id: number) => {
     throw new Error(error.response?.data?.message || "Failed to approve transaction.");
   }
 };
-//fetch transaction by id
+
+// Fetch transaction by ID
 const fetchTransactionById = async (id: number) => {
   try {
     const response = await apiClient.get(`/api/v1/transactions/${id}`);
@@ -370,6 +373,27 @@ const fetchTransactionById = async (id: number) => {
     throw new Error(error.response?.data?.message || "Failed to fetch transaction details.");
   }
 };
+
+// Reset Password API
+const resetPassword = async (email: string) => {
+  try {
+    const response = await apiClient.post('/api/v1/auth/reset-password', { email });
+    return response.data; // Returns success message
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to send reset password link.');
+  }
+};
+
+// Update Password API
+const updatePassword = async (email: string, password: string, token: string) => {
+  try {
+    const response = await apiClient.put('/api/v1/auth/password', { email, password, token });
+    return response.data; // Returns success message
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to update password.');
+  }
+};
+
 // Export the API functions
 export {
   login,
@@ -395,6 +419,8 @@ export {
   loginWithGoogle,
   loginWithPin,
   listTransactions,
-  approveTransaction, 
+  approveTransaction,
   fetchTransactionById,
+  resetPassword,
+  updatePassword,
 };

@@ -347,12 +347,12 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
               <Image src="/yellowdrop.svg" alt="" width={20} height={20} />
             </button>
             {quickActionOpen && (
-              <div className="absolute bg-white shadow-lg rounded-md mt-2 p-2 w-32">
+              <div className="absolute bg-white shadow-lg  z-30 rounded-md mt-2 p-2 w-32">
                 <ul className="space-y-1">
                   <li>
                     <button
                       onClick={() => handleQuickActionSelect("Suspend All")}
-                      className="hover:text-[#FDAC15] text-sm"
+                      className="hover:text-[#FDAC15] text-black text-sm"
                     >
                       Suspend All
                     </button>
@@ -360,7 +360,7 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
                   <li>
                     <button
                       onClick={() => handleQuickActionSelect("Delete All")}
-                      className="hover:text-[#FDAC15] text-sm"
+                      className="hover:text-[#FDAC15] text-black text-sm"
                     >
                       Delete All
                     </button>
@@ -385,7 +385,7 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
                   <li>
                     <button
                       onClick={() => handleFilterSelect('active')}
-                      className="hover:text-[#FDAC15] text-sm"
+                      className="hover:text-[#FDAC15] text-sm text-black"
                     >
                       Active
                     </button>
@@ -393,7 +393,7 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
                   <li>
                     <button
                       onClick={() => handleFilterSelect('suspended')}
-                      className="hover:text-[#FDAC15] text-sm"
+                      className="hover:text-[#FDAC15] text-sm text-black"
                     >
                       Suspended
                     </button>
@@ -401,7 +401,7 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
                   <li>
                     <button
                       onClick={() => handleFilterSelect('all')}
-                      className="hover:text-[#FDAC15] text-sm"
+                      className="hover:text-[#FDAC15] text-black text-sm"
                     >
                       All
                     </button>
@@ -477,12 +477,12 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
 
                   {/* Dropdown Menu */}
                   {dropdownOpen[item.id] && (
-                    <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-md z-10">
+                    <div className="absolute -top-16 mt-2 w-32 bg-white border border-gray-200 rounded shadow-md z-10">
                       <ul>
                         {item.is_active ? (
                           <li>
                             <button
-                              className="w-full text-left px-3 py-2 hover:bg-gray-100 hover:text-[#FDAC15]"
+                              className="w-full text-left text-black px-3 py-2 hover:bg-gray-100 hover:text-[#FDAC15]"
                               onClick={() => handleThreeDotAction(item.id, "Suspend")} // Suspend logic
                             >
                               Suspend
@@ -491,7 +491,7 @@ const UserList = ({ setSelectedUsers }: { setSelectedUsers: React.Dispatch<React
                         ) : (
                           <li>
                             <button
-                              className="w-full text-left px-3 py-2 hover:bg-gray-100 hover:text-[#FDAC15]"
+                              className="w-full text-left text-black px-3 py-2 hover:bg-gray-100 hover:text-[#FDAC15]"
                               onClick={() => handleThreeDotAction(item.id, "Restore")} // Unsuspend (Restore) logic
                             >
                               Restore

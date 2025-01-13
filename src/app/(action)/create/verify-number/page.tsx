@@ -64,9 +64,10 @@ const VerifyNumberPage = () => {
   };
 
   return (
-    <div className="p-4 h-screen flex flex-col justify-center items-center">
+    <div className="p-3 h-screen ">
+        
       {/* Close Button */}
-      <div className="flex justify-end pr-2 mb-6 w-full max-w-md">
+      <div className="flex justify-end  pr-2  w-full">
         <div
           className="p-2 rounded-full bg-[#FFF7E8] shadow-md cursor-pointer"
           onClick={handleCloseClick}
@@ -75,10 +76,12 @@ const VerifyNumberPage = () => {
           <Image src="/closex.svg" alt="Close" width={20} height={20} />
         </div>
       </div>
+      <div className="  h-full flex flex-col justify-center items-center">
+    
 
       {/* Content */}
-      <div className="w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-2 text-center">Verify Number</h1>
+      <div className="w-full  border border-gray-200 rounded-md py-16 px-3  max-w-md">
+        <h1 className="text-2xl font-bold mb-4 text-center">Verify Number</h1>
         <p className="text-gray-800 mb-6 text-center">
           An OTP was sent to the primary number you entered.
         </p>
@@ -96,12 +99,14 @@ const VerifyNumberPage = () => {
         <button
           onClick={handleVerifyOtp}
           disabled={isSubmitting}
-          className="mt-6 w-full px-6 py-2 bg-[#FDAC15] text-white rounded-md hover:bg-[#e69900] disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="mt-36 w-full px-6 py-2 bg-[#FDAC15] text-white rounded-md hover:bg-[#e69900] disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           {isSubmitting ? "Verifying..." : "Verify"}
         </button>
       </div>
     </div>
+    </div>
+    
   );
 };
 

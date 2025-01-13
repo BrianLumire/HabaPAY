@@ -70,7 +70,7 @@ const DeletePage = () => {
     if (document.referrer.includes("/manage-users")) {
       router.push("/manage-users");
     } else {
-      router.push(`/manage-users/${userId}`);
+      router.push(`/manage-users`);
     }
   };
 
@@ -124,8 +124,11 @@ const DeletePage = () => {
 
       {/* User Info and Checkbox */}
       <div className="flex flex-col items-center justify-center">
-        <div className="flex items-center">
+        <div className="flex items-center flex-col">
           <p className="font-ibmPlexSans font-semibold text-xl md:text-2xl md:mb-8 mb-4">Confirm Delete</p>
+          <p className="font-ibmPlexSans text-gray-500 font-normal text-base md:text-lg md:mb-4 mb-2">
+            Select user to activate the delete button
+          </p>
         </div>
         <div
           className={`shadow-2xl md:justify-between md:px-36 px-7 md:w-[70%] md:items-center border border-gray-200 flex flex-col md:flex-row transition-all duration-300 ${isChecked ? "transform scale-105" : ""}`}
@@ -195,15 +198,15 @@ const DeletePage = () => {
           {/* Other Actions */}
           <div className="flex flex-col gap-4 mb-5">
             <h3 className="mb-3 font-ibmPlexSans font-semibold text-lg">Other Actions</h3>
-            <div className="flex items-center gap-3 bg-[#FFF7E8]">
+            <div className="flex items-center gap-3 p-1 bg-[#FFF7E8]">
               <Image src="/edit.svg" alt="" width={23} height={23} />
               <span className="font-ibmPlexSans text-black">Edit Profile</span>
             </div>
-            <div className="flex items-center gap-3 bg-[#FFF7E8]" onClick={handleDeleteClick}>
+            <div className="flex items-center gap-3 p-1 bg-[#FFF7E8]" onClick={handleDeleteClick}>
               <Image src="/suspend.svg" alt="" width={19} height={19} />
               <span className="font-ibmPlexSans text-black">Suspend</span>
             </div>
-            <div className="flex items-center gap-3 bg-[#FFF7E8]">
+            <div className="flex items-center gap-3 p-1 bg-[#FFF7E8]">
               <Image src="/primary.svg" alt="" width={19} height={19} />
               <span className="font-ibmPlexSans text-black">Contact</span>
             </div>
@@ -211,7 +214,7 @@ const DeletePage = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="bg-slate-100 flex mt-10 md:mt-36 gap-4">
+        <div className=" flex mt-10 md:mt-36 gap-4">
           <button
             className="px-9 md:px-14 py-1 text-[#FDAC15] text-lg border border-[#FDAC15] rounded-sm font-ibmPlexSans font-medium"
             onClick={handleCancelDelete}
@@ -233,8 +236,8 @@ const DeletePage = () => {
       {/* Confirmation Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this user?</p>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-1/3">
+            <p className="text-lg text-black font-semibold mb-4">Are you sure you want to delete this user?</p>
             <div className="flex justify-between">
               <button onClick={handleCancelDelete} className="px-4 py-2 text-gray-700 border rounded-md">
                 Cancel

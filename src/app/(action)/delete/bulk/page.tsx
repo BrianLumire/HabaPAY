@@ -184,25 +184,45 @@ const BulkDeletePage = () => {
                   {user.balance !== null ? user.balance : "Loading..."}
                 </span>
               </div>
+              <div className="flex items-center">
+                <p className="font-ibmPlexSans font-medium">Business:</p>
+                <span className="font-ibmPlexSans">n/a</span>
+              </div>
+              <div className="flex items-center">
+                <p className="font-ibmPlexSans font-medium">Created:</p>
+                <span className="font-ibmPlexSans">
+                  {user.created_at
+                    ? new Date(user.created_at).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })
+                    : "Loading..."}
+                </span>
+              </div>
             </div>
 
             {/* Other Actions */}
-            <div className="flex flex-col gap-4 mb-5">
-              <h3 className="mb-3 font-ibmPlexSans font-semibold text-lg">Other Actions</h3>
-              <div className="flex items-center gap-3 bg-[#FFF7E8]">
-                <Image src="/edit.svg" alt="" width={23} height={23} />
-                <span className="font-ibmPlexSans text-black">Edit Profile</span>
-              </div>
-              <div className="flex items-center gap-3 bg-[#FFF7E8]">
-                <Image src="/delete.svg" alt="" width={19} height={19} />
-                <span className="font-ibmPlexSans text-black">Delete</span>
-              </div>
-            </div>
-          </div>
+                      <div className="flex flex-col gap-4 mb-5">
+                        <h3 className="mb-3 font-ibmPlexSans font-semibold text-lg">Other Actions</h3>
+                        <div className="flex items-center gap-3 p-1 bg-[#FFF7E8]">
+                          <Image src="/edit.svg" alt="" width={23} height={23} />
+                          <span className="font-ibmPlexSans text-black">Edit Profile</span>
+                        </div>
+                        <div className="flex items-center gap-3 p-1 bg-[#FFF7E8]">
+                          <Image src="/suspend.svg" alt="" width={19} height={19} />
+                          <span className="font-ibmPlexSans text-black">Suspend</span>
+                        </div>
+                        <div className="flex items-center gap-3 p-1 bg-[#FFF7E8]">
+                          <Image src="/primary.svg" alt="" width={19} height={19} />
+                          <span className="font-ibmPlexSans text-black">Contact</span>
+                        </div>
+                      </div>
+                    </div>
         ))}
 
         {/* Action Buttons */}
-        <div className="bg-slate-100 flex mt-10 md:mt-36 gap-4">
+        <div className="flex mt-10 md:mt-36 gap-4">
           <button
             className="px-9 md:px-14 py-1 text-[#FDAC15] text-lg border border-[#FDAC15] rounded-sm font-ibmPlexSans font-medium"
             onClick={() => router.push("/manage-users")}
@@ -226,8 +246,8 @@ const BulkDeletePage = () => {
   {/* Confirmation Modal */}
   {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <p className="text-lg font-semibold mb-4">Are you sure you want to suspend the selected users?</p>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-1/3">
+            <p className="text-lg text-black font-semibold mb-4">Are you sure you want to suspend the selected users?</p>
             <div className="flex justify-between">
               <button onClick={handleCancelDelete} className="px-4 py-2 text-gray-700 border border-[#FDAC15] hover:text-[#FDAC15] rounded-md">
                 Cancel
