@@ -82,11 +82,11 @@ export default function Sidebar({
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
   
-    // Optionally, clear any other user-related data from localStorage
-    localStorage.removeItem("userData"); // Example: Clear user data if stored
+    // Clear the accessToken cookie
+    document.cookie = "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
   
     // Redirect to the login page
-    window.location.href = "/login"; // Adjust the path as necessary
+    window.location.href = "/login"; // Use window.location.href to force a full page reload
   };
 
   // Handle Cancel Log out

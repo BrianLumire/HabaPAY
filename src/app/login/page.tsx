@@ -1,13 +1,14 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link"; // Import Link from next/link
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-import { login, loginWithGoogle, loginWithPin } from "@/utils/api"; // Import loginWithPin
+import Link from "next/link"; 
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { login, loginWithPin } from "@/utils/api"; 
 import Image from "next/image";
 import { ModeToggle } from "@/components/mode-toggle";
+import GoogleAuth from "@/components/GoogleAuth"; 
 
-const Loginpage = () => {
+const LoginPage = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
@@ -22,28 +23,24 @@ const Loginpage = () => {
     e.preventDefault();
     setIsProcessing(true);
     setErrorMessage(null);
-
+  
     try {
       let data;
       if (loginMethod === "password") {
-        // Call the login API function for password
         data = await login(email, password);
       } else {
-        // Call the loginWithPin API function for PIN
         data = await loginWithPin(email, pin);
       }
-
-      // Extract tokens from the response
+  
       const { access_token, refresh_token } = data.data;
-
-      // Store tokens in localStorage
-      if (access_token && refresh_token) {
-        localStorage.setItem("accessToken", access_token);
-        localStorage.setItem("refreshToken", refresh_token);
-      } else {
-        setErrorMessage("Failed to retrieve tokens.");
-      }
-
+  
+      // Store tokens in localStorage (optional)
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
+  
+      // Set access token as a cookie
+      document.cookie = `accessToken=${access_token}; path=/; max-age=86400;`; // 1 day expiry
+  
       // Redirect to the home page
       router.push("/home");
     } catch (error: any) {
@@ -58,49 +55,13 @@ const Loginpage = () => {
     setPasswordVisible((prevState) => !prevState);
   };
 
-  // Handle Google Sign-In Success
-  const handleGoogleSuccess = async (credentialResponse: any) => {
-    console.log("Google Sign-In Success:", credentialResponse);
-    const token = credentialResponse.credential;
-    console.log("Google ID Token:", token);
-
-    setIsProcessing(true);
-    setErrorMessage(null);
-
-    try {
-      const data = await loginWithGoogle(token);
-      console.log("Backend Response:", data);
-
-      const { access_token, refresh_token } = data.data;
-
-      if (access_token && refresh_token) {
-        localStorage.setItem("accessToken", access_token);
-        localStorage.setItem("refreshToken", refresh_token);
-      } else {
-        setErrorMessage("Failed to retrieve tokens.");
-      }
-
-      router.push("/home");
-    } catch (error: any) {
-      console.error("Google Sign-In Error:", error);
-      setErrorMessage(error.message || "Google Sign-In failed. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  // Handle Google Sign-In Failure
-  const handleGoogleFailure = () => {
-    setErrorMessage("Google Sign-In failed. Please try again.");
-  };
-
   // Toggle between Password and PIN login methods
   const toggleLoginMethod = () => {
     setLoginMethod((prevMethod) => (prevMethod === "password" ? "pin" : "password"));
   };
 
   return (
-    <GoogleOAuthProvider clientId="871395489201-4odg9ulq63s4a5s4p3t1jmagn5g3li0b.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="599193428021-p0hf67i062jsogi488rqcvm3520a3h26.apps.googleusercontent.com">
       <div className="h-screen flex flex-col">
         {/* Header */}
         <div className="pr-4 flex-shrink-0 pt-3 flex justify-between items-center">
@@ -197,12 +158,12 @@ const Loginpage = () => {
 
               {/* Forgot Password or Forgot PIN Link */}
               <div className="text-center">
-              <Link
-  href="/login/update-pin" // Update the href to point to the UpdatePinPage
-  className="text-[#FDAC15] hover:underline"
->
-  {loginMethod === "password" ? "Forgot Password?" : "Forgot PIN?"}
-</Link>
+                <Link
+                  href="/login/update-pin" // Update the href to point to the UpdatePinPage
+                  className="text-[#FDAC15] hover:underline"
+                >
+                  {loginMethod === "password" ? "Forgot Password?" : "Forgot PIN?"}
+                </Link>
               </div>
 
               {/* Submit Button */}
@@ -226,10 +187,7 @@ const Loginpage = () => {
 
             {/* Google Sign-In Button */}
             <div className="flex items-center justify-center">
-              <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleFailure}
-              />
+              <GoogleAuth /> {/* Use the GoogleAuth component here */}
             </div>
 
             {/* Divider */}
@@ -255,4 +213,4 @@ const Loginpage = () => {
   );
 };
 
-export default Loginpage;
+export default LoginPage;
