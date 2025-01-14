@@ -197,12 +197,12 @@ const Loginpage = () => {
 
               {/* Forgot Password or Forgot PIN Link */}
               <div className="text-center">
-                <Link
-                  href={loginMethod === "password" ? "/login/reset-password" : "/login/reset-pin"}
-                  className="text-[#FDAC15] hover:underline"
-                >
-                  {loginMethod === "password" ? "Forgot Password?" : "Forgot PIN?"}
-                </Link>
+              <Link
+  href="/login/update-pin" // Update the href to point to the UpdatePinPage
+  className="text-[#FDAC15] hover:underline"
+>
+  {loginMethod === "password" ? "Forgot Password?" : "Forgot PIN?"}
+</Link>
               </div>
 
               {/* Submit Button */}

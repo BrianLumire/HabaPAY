@@ -1,8 +1,7 @@
-// components/Layout.tsx
 "use client";
 import { useState } from "react";
 
-import AppSidebar from "@/components/app-sidebar"
+import AppSidebar from "@/components/app-sidebar";
 import Navbars from "@/components/Navbars";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -14,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const toggleCollapse = () => setIsCollapsed(!isCollapsed);
 
   return (
-    <div className="flex h-screen  ">
+    <div className="flex h-screen ">
       {/* Sidebar */}
       <AppSidebar
         isMobileSidebarOpen={isMobileSidebarOpen}
@@ -23,15 +22,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       />
 
       {/* Main Content */}
-      <div className="w-full mx-3">
+      <div className="flex-1 flex flex-col mx-2 overflow-hidden">
         {/* Navbar */}
         <Navbars
           toggleMobileSidebar={toggleMobileSidebar}
           toggleCollapse={toggleCollapse}
           isCollapsed={isCollapsed}
-        />{/* Page Content */}{children}
-      </div>
+        />
 
+        {/* Page Content */}
+        <div className="flex-1 overflow-y-auto ">
+          {children}
+        </div>
+      </div>
     </div>
   );
 }
