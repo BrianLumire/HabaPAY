@@ -21,10 +21,14 @@ const GoogleAuth = () => {
       // Extract tokens from the response
       const { access_token, refresh_token } = data.data;
 
-      // Store tokens in localStorage
       if (access_token && refresh_token) {
+        // Store tokens in localStorage (for client-side access)
         localStorage.setItem("accessToken", access_token);
         localStorage.setItem("refreshToken", refresh_token);
+
+        // Store tokens in cookies (for server-side access)
+        document.cookie = `accessToken=${access_token}; path=/; max-age=86400;`; // 1 day expiry
+        document.cookie = `refreshToken=${refresh_token}; path=/; max-age=86400;`; // 1 day expiry
 
         // Show success toast notification
         toast.success("Google Sign-In successful. Redirecting...");
