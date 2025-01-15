@@ -51,8 +51,11 @@ const CreateUserPage = () => {
         // Store the form data in sessionStorage
         sessionStorage.setItem("createUserData", JSON.stringify(data));
 
-        // Redirect to the Verify Number Page
-        router.push("/create/verify-number");
+        // Show success toast notification
+        toast.success("User has been registered successfully!");
+
+        // Redirect to the Verify Email Page
+        router.push("/create/verify-email");
       } else {
         toast.error("Failed to register user. Please try again.");
       }
